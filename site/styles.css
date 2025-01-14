@@ -1,0 +1,98 @@
+:root {
+  --forest-green: #058e3fff;
+  --alice-blue: #edf6f9ff;
+  --tomato: #fe5e41ff;
+  --lime: #bced09ff;
+  --oxford-blue: #001427ff;
+  --sys-display-large: 500 5.5rem / 5.625rem Google Sans, Helvetica, Arial, sans-serif;
+  --sys-display-medium: 400 2.5rem / 3rem Google Sans, Helvetica, Arial, sans-serif;
+  --sys-display-small: 400 2.25rem / 2.75rem Google Sans, Helvetica, Arial, sans-serif;
+  --sys-headline-large: 400 2rem / 1.75rem Google Sans, Helvetica, Arial, sans-serif;
+  --sys-headline-small: 400 1.5rem / 2.25rem Google Sans, Helvetica, Arial, sans-serif;
+  --sys-title-large: 400 1.5rem / 2.25rem Google Sans Text, Helvetica, Arial, sans-serif;
+  --sys-body-large: 400 1.125rem / 1.75rem Google Sans Text, Helvetica, Arial, sans-serif;
+  --sys-label-large: 500 1rem / 1.25rem Google Sans Text, Helvetica, Arial, sans-serif;
+  --mat-app-label-large-font: v .$ font-display;
+}
+
+body{
+  margin: 0;
+  margin-bottom: 1000px;
+}
+
+p{
+  margin: 0;
+}
+
+/* header */
+header{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: sticky;
+  height: 5rem;
+  padding: 0 1.875rem;
+}
+.left-header, .menu-ul{
+  display: flex;
+  align-items: center;
+}
+.menu-ul{
+  list-style: none;
+  gap: 2rem;
+}
+
+.logo{
+  height: 1.5rem;
+  object-fit: cover;
+}
+.project-name, .menu-ul{
+  font: var(--sys-label-large);
+  letter-spacing: var(--sys-label-large-tracking);
+}
+.project-name{
+  font-size: 20px;
+}
+
+/* main */
+.intro{
+  width: 50%;
+  text-align: center;
+  margin: 6rem auto;
+  margin-bottom: 7.125rem;
+}
+
+.title{
+  font: var(--sys-display-large);
+  letter-spacing: var(--sys-display-large-tracking);
+  margin: 0 0 44px;
+}
+.gradient-title{
+  background: linear-gradient(to right, #bced09ff, #fe5e41ff);
+  background-clip: text;
+  color: transparent;
+}
+
+.subtitle{
+  font: var(--sys-headline-small);
+  letter-spacing: var(--sys-headline-small-tracking);
+  margin: 0 0 .5em;
+  color: #726f6f;
+  margin: 0 0 44px;
+}
+
+.btn-app-mealmate{
+  background-color: black;
+  color: white;
+  border: none;
+  border-radius: 20px;
+  font: var(--sys-headline-small);
+  letter-spacing: var(--sys-headline-small-tracking);
+
+  padding-top: 12px;
+  padding-bottom: 12px;
+  padding-left: 30px;
+  padding-right: 30px;
+
+  cursor: pointer;
+}

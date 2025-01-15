@@ -1,9 +1,4 @@
 :root {
-  --forest-green: #058e3fff;
-  --alice-blue: #edf6f9ff;
-  --tomato: #fe5e41ff;
-  --lime: #bced09ff;
-  --oxford-blue: #001427ff;
   --sys-display-large: 500 5.5rem / 5.625rem Google Sans, Helvetica, Arial, sans-serif;
   --sys-display-medium: 400 2.5rem / 3rem Google Sans, Helvetica, Arial, sans-serif;
   --sys-display-small: 400 2.25rem / 2.75rem Google Sans, Helvetica, Arial, sans-serif;
@@ -17,7 +12,6 @@
 
 body{
   margin: 0;
-  margin-bottom: 1000px;
 }
 
 p{
@@ -30,8 +24,17 @@ header{
   justify-content: space-between;
   align-items: center;
   position: sticky;
-  height: 5rem;
-  padding: 0 1.875rem;
+  padding: 0 50px;
+
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  background-color: white;
+  height: 100px;
+
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
 }
 .left-header, .menu-ul{
   display: flex;
@@ -56,19 +59,22 @@ header{
 
 /* main */
 .intro{
-  width: 50%;
+  width: 45%;
   text-align: center;
-  margin: 6rem auto;
+  margin: 9rem auto;
   margin-bottom: 7.125rem;
 }
 
 .title{
-  font: var(--sys-display-large);
-  letter-spacing: var(--sys-display-large-tracking);
+  font-family: "Acme", serif;
+  font-weight: 400;
+  font-style: normal;
+  font-size: 100px;
+  line-height: 5.5rem;
   margin: 0 0 44px;
 }
 .gradient-title{
-  background: linear-gradient(to right, #bced09ff, #fe5e41ff);
+  background: linear-gradient(to right, rgb(9, 237, 153), rgb(99, 178, 86));
   background-clip: text;
   color: transparent;
 }
@@ -85,9 +91,10 @@ header{
   background-color: black;
   color: white;
   border: none;
-  border-radius: 20px;
+  border-radius: 16px;
   font: var(--sys-headline-small);
   letter-spacing: var(--sys-headline-small-tracking);
+  font-size: 20px;
 
   padding-top: 12px;
   padding-bottom: 12px;
@@ -95,4 +102,55 @@ header{
   padding-right: 30px;
 
   cursor: pointer;
+}
+
+.btn-app-mealmate:hover{
+  background-color: rgba(0, 0, 0, 0.9);
+}
+
+.title-main{
+  font: var(--sys-body-large);
+  letter-spacing: var(--sys-body-large-tracking);
+  font-size: 35.2px;
+  margin:62px;
+  text-align: center;
+}
+
+.container{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 95px 0;
+}
+.content{
+  width: 360px;
+  height: 332px;
+  margin-right: 3rem;
+  font: var(--sys-body-large);
+  letter-spacing: var(--sys-body-large-tracking);
+}
+.div-img{
+  align-items: center;
+}
+.img{
+  width: 765px;
+  height: 437px;
+  border-radius: 20px;
+}
+
+.icona{
+  width: 50px;
+  height: 50px;
+  object-fit: cover;
+  margin-bottom: 7px;
+}
+.title-container{
+  font-size: 28px;
+  margin-bottom: 12px;
+}
+.paragrafo-container{
+  margin-top: 24px;
+  font-size: 20px;
+  line-height: 2rem;
+  color: #726f6f;
 }

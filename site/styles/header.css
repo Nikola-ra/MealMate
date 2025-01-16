@@ -15,21 +15,38 @@ header{
   
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
   }
-  .left-header, .menu-ul{
+  .left-header, .Nav{
     display: flex;
     align-items: center;
   }
-  .menu-ul{
+  .Nav{
     list-style: none;
     gap: 2rem;
   }
-  
+  .Nav a{
+    position: relative;
+    color: black;
+    text-decoration: none;
+  }
+  .Nav a::before{
+    content: '';
+    position: absolute;
+    top:100%;
+    left: 0;
+    width: 0;
+    height: 3px;
+    background: linear-gradient(to right, #33f671,  #14bd77);
+    transition: .3s;
+  }
+  .Nav a:hover::before{
+    width: 100%;
+  }
   .logo{
     height: 3rem;
     object-fit: cover;
     padding-right: 15px;
   }
-  .project-name, .menu-ul{
+  .project-name, .Nav{
     font-size: 20px;
     font-family: "Acme", serif;
     font-weight: 400;

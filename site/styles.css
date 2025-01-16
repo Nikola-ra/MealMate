@@ -1,15 +1,3 @@
-:root {
-  --sys-display-large: 500 5.5rem / 5.625rem Google Sans, Helvetica, Arial, sans-serif;
-  --sys-display-medium: 400 2.5rem / 3rem Google Sans, Helvetica, Arial, sans-serif;
-  --sys-display-small: 400 2.25rem / 2.75rem Google Sans, Helvetica, Arial, sans-serif;
-  --sys-headline-large: 400 2rem / 1.75rem Google Sans, Helvetica, Arial, sans-serif;
-  --sys-headline-small: 400 1.5rem / 2.25rem Google Sans, Helvetica, Arial, sans-serif;
-  --sys-title-large: 400 1.5rem / 2.25rem Google Sans Text, Helvetica, Arial, sans-serif;
-  --sys-body-large: 400 1.125rem / 1.75rem Google Sans Text, Helvetica, Arial, sans-serif;
-  --sys-label-large: 500 1rem / 1.25rem Google Sans Text, Helvetica, Arial, sans-serif;
-  --mat-app-label-large-font: v .$ font-display;
-}
-
 body{
   margin: 0;
 }
@@ -46,15 +34,15 @@ header{
 }
 
 .logo{
-  height: 1.5rem;
+  height: 3rem;
   object-fit: cover;
+  padding-right: 15px;
 }
 .project-name, .menu-ul{
-  font: var(--sys-label-large);
-  letter-spacing: var(--sys-label-large-tracking);
-}
-.project-name{
   font-size: 20px;
+  font-family: "Acme", serif;
+  font-weight: 400;
+  font-style: normal;
 }
 
 /* main */
@@ -74,14 +62,16 @@ header{
   margin: 0 0 44px;
 }
 .gradient-title{
-  background: linear-gradient(to right, rgb(9, 237, 153), rgb(99, 178, 86));
+  background: linear-gradient(to right, #33f671,  #14bd77);
   background-clip: text;
   color: transparent;
 }
 
 .subtitle{
-  font: var(--sys-headline-small);
-  letter-spacing: var(--sys-headline-small-tracking);
+  font-family: "Poppins", serif;
+  font-weight: 400;
+  font-style: normal;
+  font-size: 22px;
   margin: 0 0 .5em;
   color: #726f6f;
   margin: 0 0 44px;
@@ -92,14 +82,15 @@ header{
   color: white;
   border: none;
   border-radius: 16px;
-  font: var(--sys-headline-small);
-  letter-spacing: var(--sys-headline-small-tracking);
+  font-family: "Acme", serif;
+  font-weight: 400;
+  font-style: normal;
   font-size: 20px;
 
-  padding-top: 12px;
-  padding-bottom: 12px;
-  padding-left: 30px;
-  padding-right: 30px;
+  padding-top: 15px;
+  padding-bottom: 15px;
+  padding-left: 33px;
+  padding-right: 33px;
 
   cursor: pointer;
 }
@@ -109,8 +100,9 @@ header{
 }
 
 .title-main{
-  font: var(--sys-body-large);
-  letter-spacing: var(--sys-body-large-tracking);
+  font-family: "Poppins", serif;
+  font-weight: 600;
+  font-style: normal;
   font-size: 35.2px;
   margin:62px;
   text-align: center;
@@ -146,11 +138,23 @@ header{
 }
 .title-container{
   font-size: 28px;
-  margin-bottom: 12px;
+
+  font-family: "Poppins", serif;
+  font-weight: 500;
+  font-style: normal;
 }
 .paragrafo-container{
   margin-top: 24px;
   font-size: 20px;
   line-height: 2rem;
   color: #726f6f;
+  font-family: "Poppins", serif;
+  font-weight: 300;
+  font-style: normal;
 }
+
+/* footer */
+footer{
+  background-color: lightblue;
+  height: 200px;
+} 

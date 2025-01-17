@@ -10,7 +10,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
 
   <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
-    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+  <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
 
   <link rel="stylesheet" href="styles/styles.css">
   <link rel="stylesheet" href="styles/header.css">
@@ -22,12 +22,12 @@
 <body>
   <header>
     <div class="left-header">
-      <img class="logo" src="icons/logo-1.png" alt="logo">
+      <a href="#top"><img class="logo" src="icons/logo-1.png" alt="logo"></a>
       <p class="project-name">MealMate</p>
     </div>
 
     <nav class="Nav">
-      <a href="#title-main">Panoramica</a>
+      <a href="#btn-app-mealmate">Panoramica</a>
       <a href="#footer-container">Chi Siamo</a>
     </nav>
   </header>
@@ -42,115 +42,112 @@
         Trasforma la tua dispensa in ispirazione, riduci gli sprechi e cucina in modo smart!
       </p>
 
-      <button class="btn-app-mealmate">Prova MealMate</button>
+      <button id="btn-app-mealmate">Prova MealMate</button>
     </div>
     
-    <div id="title-main">
+    <div class="title-main">
       <p>Il tuo assistente intelligente per una cucina organizzata e senza sprechi</p>
     </div>
 
     <div class="container">
       <div class="content">
-        <!-- testo -->
         <img class="icona" src="icons/1-step.png" alt="icona">
         <div class="title-container">
-          <!-- titolo -->
           Scarica l'app
         </div>
         <div class="paragrafo-container">
-          <!-- paragrafo -->
           Lorem ipsum dolor sit amet consectetur adipisicing elit. Incidunt laudantium vel facere aliquid provident? Mollitia accusamus sit, 
         </div>
       </div>
       <div class="div">
-        <!-- video/immagine -->
         <img class="img" src="img/frizzate.jfif" alt="img">
       </div>
     </div>
 
     <div class="container">
       <div class="content">
-        <!-- testo -->
         <img class="icona" src="icons/2-step.png" alt="icona">
         <div class="title-container">
-          <!-- titolo -->
           Scannerizza i prodotti
         </div>
         <div class="paragrafo-container">
-          <!-- paragrafo -->
           Lorem ipsum dolor sit amet consectetur adipisicing elit. Incidunt laudantium vel facere aliquid provident? Mollitia accusamus sit, 
         </div>
       </div>
       <div class="div">
-        <!-- video/immagine -->
         <img class="img" src="img/frizzate.jfif" alt="img">
       </div>
     </div>
 
     <div class="container">
       <div class="content">
-        <!-- testo -->
         <img class="icona" src="icons/3-step.png" alt="icona">
         <div class="title-container">
-          <!-- titolo -->
           Scegli la ricetta
         </div>
         <div class="paragrafo-container">
-          <!-- paragrafo -->
           Lorem ipsum dolor sit amet consectetur adipisicing elit. Incidunt laudantium vel facere aliquid provident? Mollitia accusamus sit, 
         </div>
       </div>
       <div class="div">
-        <!-- video/immagine -->
         <img class="img" src="img/frizzate.jfif" alt="img">
       </div>
     </div>
 
     <div class="container">
       <div class="content">
-        <!-- testo -->
         <img class="icona" src="icons/4-step.png" alt="icona">
         <div class="title-container">
-          <!-- titolo -->
           Goditi il piatto
         </div>
         <div class="paragrafo-container">
-          <!-- paragrafo -->
           Lorem ipsum dolor sit amet consectetur adipisicing elit. Incidunt laudantium vel facere aliquid provident? Mollitia accusamus sit, 
         </div>
       </div>
       <div class="div">
-        <!-- video/immagine -->
         <img class="img" src="img/frizzate.jfif" alt="img">
       </div>
     </div>
-
 
     <div class="pareri">
       <div class="pareri-2">
         <div class="recensione">
           <div class="text-rec">
-            <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Sapiente, asperiores dicta! Sed tempora repellendus</p>
+            <p>App super! Mi ha salvato più volte quando non sapevo cosa cucinare. Le ricette sono facili e veloci, perfette per uno come me!</p>
           </div>
           <div class="utente-rec">
             <div class="foto-rec">
-              <img src="img/Jhon Cena.jpg" alt="">
+              <img src="img/leo-rossi.png" alt="">
             </div>
             <div class="nome-rec">
-                <p>Manuel Latino</p>
+                <p>Leo Rossi</p>
+            </div>
+            <div class="stelle-rec">
+              <img src="icons/stella-piena.png" class="ic-stella">
+              <img src="icons/stella-piena.png" class="ic-stella">
+              <img src="icons/stella-piena.png" class="ic-stella">
+              <img src="icons/stella-piena.png" class="ic-stella">
+              <img src="icons/stella-piena.png" class="ic-stella">
             </div>
           </div>
         </div>
         <div class="recensione">
           <div class="text-rec">
-            <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Sapiente, asperiores dicta! Sed tempora repellendus</p>
+            <p>Da quando ho questa app, la mia cucina è diventata un vero e proprio laboratorio. Ho sperimentato ricette di tutto il mondo e ho sorpreso i miei amici con piatti sempre nuovi. L'unica pecca? Ora mi chiedono sempre di cucinare io!</p>
           </div>
           <div class="utente-rec">
             <div class="foto-rec">
-              <img src="" alt="">
+              <img src="img/marco-bianchi.png">
             </div>
             <div class="nome-rec">
-                <p>Manuel Latino</p>
+                <p>Marco Bianchi</p>
+            </div>
+            <div class="stelle-rec">
+              <img src="icons/stella-piena.png" class="ic-stella">
+              <img src="icons/stella-piena.png" class="ic-stella">
+              <img src="icons/stella-piena.png" class="ic-stella">
+              <img src="icons/stella-piena.png" class="ic-stella">
+              <img src="icons/stella-meta.png" class="ic-stella">
             </div>
           </div>
         </div>
@@ -159,40 +156,49 @@
       <div class="pareri-2">
         <div class="recensione">
           <div class="text-rec">
-            <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Sapiente, asperiores dicta! Sed tempora repellendus</p>
+            <p>Questa app è una vera scoperta! Le spiegazioni sono chiare e le foto aiutano molto a capire i passaggi.</p>
           </div>
           <div class="utente-rec">
             <div class="foto-rec">
-              <img src="" alt="">
+              <img src="img/sofia-verdi.png">
             </div>
             <div class="nome-rec">
-                <p>Manuel Latino</p>
+                <p>Sofia Verdi</p>
+            </div>
+            <div class="stelle-rec">
+              <img src="icons/stella-piena.png" class="ic-stella">
+              <img src="icons/stella-piena.png" class="ic-stella">
+              <img src="icons/stella-piena.png" class="ic-stella">
+              <img src="icons/stella-piena.png" class="ic-stella">
+              <img src="icons/stella-vuota.png" class="ic-stella">
             </div>
           </div>
         </div>
         <div class="recensione">
           <div class="text-rec">
-            <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Sapiente, asperiores dicta! Sed tempora repellendus</p>
+            <p>Sono celiaca e trovare ricette senza glutine non è sempre facile. Con questa app ho risolto il problema! Ho trovato tantissime idee per preparare piatti gustosi e salutari.</p>
           </div>
           <div class="utente-rec">
             <div class="foto-rec">
-              <img src="" alt="">
+              <img src="img/anna-rossi.png">
             </div>
             <div class="nome-rec">
-                <p>Manuel Latino</p>
+                <p>Anna Rossi</p>
+            </div>
+            <div class="stelle-rec">
+              <img src="icons/stella-piena.png" class="ic-stella">
+              <img src="icons/stella-piena.png" class="ic-stella">
+              <img src="icons/stella-piena.png" class="ic-stella">
+              <img src="icons/stella-piena.png" class="ic-stella">
+              <img src="icons/stella-meta.png" class="ic-stella">
             </div>
           </div>
         </div>
       </div>
-      </div>
-      
-      
     </div>
   </main>
 
-  
   <footer>
-    </div>
     <div id="footer-container">
         <a class="icon" href="https://x.com/" target="_blank">
             <ion-icon class="ic" name="logo-twitter"></ion-icon>

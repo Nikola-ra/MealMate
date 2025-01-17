@@ -29,7 +29,7 @@
   margin: 0 0 44px;
 }
 
-.btn-app-mealmate {
+#btn-app-mealmate {
   position: relative;
   color: white;
   border: none;
@@ -40,18 +40,18 @@
   font-size: 20px;
   background-color: black;
   padding: 15px 33px;
- 
+
   cursor: pointer;
   overflow: hidden;
   transition-duration: 0.3s;
 }
- 
-.btn-app-mealmate:hover {
+
+#btn-app-mealmate:hover {
   background-color:#33f671;
-  opacity: 0.7; /* Assicurati che il testo resti visibile */
+  opacity: 0.7;
 }
 
-#title-main{
+.title-main{
   font-family: "Poppins", serif;
   font-weight: 600;
   font-style: normal;
@@ -69,13 +69,11 @@
 .content{
   width: 360px;
   height: 332px;
-  margin-right: 3rem;
-  font: var(--sys-body-large);
-  letter-spacing: var(--sys-body-large-tracking);
+  margin-right: 4rem;
 }
 .div-img{
   align-items: center;
-}
+  }
 .img{
   width: 765px;
   height: 437px;
@@ -108,20 +106,19 @@
 .pareri{
   width: 80%;
   margin: auto;
-  
+
 }
 .pareri-2{
   display: flex;
   margin-bottom:30px ;
   gap: 2.5rem;
-  
-}
 
+}
 .recensione{
   padding: 20px 20px;
   border-radius: 8px;
   background-color: #f8f8fa;
-   
+  width: 50%;
 }
 .text-rec{
   font-size: 20px;
@@ -131,6 +128,12 @@
   font-weight: 300;
   font-style: normal;
 }
+.utente-rec{
+  display: flex;
+  align-items: center;
+  margin-top: 20px;
+  justify-content: baseline;
+}
 .nome-rec{
   font-size: 20px;
   line-height: 2rem;
@@ -138,11 +141,6 @@
   font-family: "Poppins", serif;
   font-weight: 400;
   font-style: normal;
-}
-.utente-rec{
-  display: flex;
-  align-items: center;  
-  margin-top: 20px;
 }
 .foto-rec{
   margin-right: 10px;
@@ -152,4 +150,14 @@
   height: 50px;
   object-fit: cover;
   border-radius: 50%;  
+}
+.stelle-rec{
+  display: flex;
+  align-items: center;
+  margin-left: auto;
+}
+.ic-stella{
+  width: 30px;
+  height: 30px;
+  padding-right: 10px;
 }

@@ -51,7 +51,7 @@
   opacity: 0.7; /* Assicurati che il testo resti visibile */
 }
 
-.title-main{
+#title-main{
   font-family: "Poppins", serif;
   font-weight: 600;
   font-style: normal;
@@ -103,4 +103,53 @@
   font-family: "Poppins", serif;
   font-weight: 300;
   font-style: normal;
+}
+
+.pareri{
+  width: 80%;
+  margin: auto;
+  
+}
+.pareri-2{
+  display: flex;
+  margin-bottom:30px ;
+  gap: 2.5rem;
+  
+}
+
+.recensione{
+  padding: 20px 20px;
+  border-radius: 8px;
+  background-color: #f8f8fa;
+   
+}
+.text-rec{
+  font-size: 20px;
+  line-height: 2rem;
+  color: #726f6f;
+  font-family: "Poppins", serif;
+  font-weight: 300;
+  font-style: normal;
+}
+.nome-rec{
+  font-size: 20px;
+  line-height: 2rem;
+  color: black;
+  font-family: "Poppins", serif;
+  font-weight: 400;
+  font-style: normal;
+}
+.utente-rec{
+  display: flex;
+  align-items: center;  
+  margin-top: 20px;
+}
+.foto-rec{
+  margin-right: 10px;
+}
+.foto-rec img{
+  width: 50px;
+  height: 50px;
+  object-fit: cover;
+  border-radius: 50%;  
 }

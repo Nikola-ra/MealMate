@@ -1,5 +1,66 @@
 footer{
-    background-color: lightblue;
-    height: 200px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    bottom: 0;
+    margin-top: 150px;
+}
+.copyright{
+    bottom: 0;
+    position: absolute;
+    font-family: "Poppins", serif;
+    font-weight: 400;
+    font-style: normal;
+    font-size: 14px;
+    color: #726f6f;;
+}
+#footer-container{
+    margin-bottom: 35px;
+    margin-top: 35px;
+   
+}
+.icon{
+    text-decoration: none;
+    margin: 10px;
+    color: #000022;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+.ic{
+    width: 30px;
+    height: 30px;
+    display: block;
 }
 
+.mascotte{
+    width: 350px;
+    height: 350x;
+    position: absolute;
+    right: 0;
+    bottom: 0;
+}
+
+.chi-siamo{
+    position: absolute;
+    left: 20px;
+    top: 20px;
+    bottom: 0;
+}
+
+.chi-siamo p{
+    font-size: 20px;
+    font-family: "Poppins", serif;
+    font-weight: 500;
+    font-style: normal;
+}
+.lista-nomi{
+    list-style: none;
+}
+.lista-nomi li{
+    font-family: "Poppins", serif;
+    font-weight: 400;
+    font-style: normal;
+}

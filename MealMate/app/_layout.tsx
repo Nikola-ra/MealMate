@@ -1,9 +1,10 @@
-import { tokenCache } from "@/lib/cache"
-import { ClerkProvider, ClerkLoaded } from "@clerk/clerk-expo"
-import { Stack } from "expo-router/stack"
-import React from "react"
+import { token } from "@/lib/tokenCache"
+import { ClerkProvider, ClerkLoaded, useAuth } from "@clerk/clerk-expo"
+import { Href, Slot, useRouter, useSegments } from "expo-router"
+import React, { useEffect } from "react"
 
-export default function Layout() {
+export default function RootLayout() {
+  const tokenCache = token
   const publishableKey = process.env.EXPO_PUBLIC_CLERK_PUBLISHABLE_KEY!
 
   if (!publishableKey) {
@@ -15,10 +16,30 @@ export default function Layout() {
   return (
     <ClerkProvider tokenCache={tokenCache} publishableKey={publishableKey}>
       <ClerkLoaded>
-        <Stack>
-          <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-        </Stack>
+        <InitialLayout />
       </ClerkLoaded>
     </ClerkProvider>
   )
+}
+
+function InitialLayout() {
+  const { isLoaded, isSignedIn } = useAuth()
+  const segments = useSegments()
+  const router = useRouter()
+
+  useEffect(() => {
+    if (!isLoaded) return
+
+    const inTabsGroup = segments[0] === "(auth)"
+
+    const homeRoute = "/home"
+    if (isSignedIn && !inTabsGroup) {
+      router.replace("/home" as Href)
+    } else if (!isSignedIn) {
+      router.replace("/login" as Href)
+    }
+    console.log(isLoaded, isSignedIn)
+  }, [isSignedIn])
+
+  return <Slot />
 }

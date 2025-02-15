@@ -3,6 +3,8 @@ import { ClerkProvider, ClerkLoaded, useAuth } from "@clerk/clerk-expo"
 import { Href, Slot, useRouter, useSegments } from "expo-router"
 import React, { useEffect } from "react"
 
+import "./globals.css"
+
 export default function RootLayout() {
   const tokenCache = token
   const publishableKey = process.env.EXPO_PUBLIC_CLERK_PUBLISHABLE_KEY!

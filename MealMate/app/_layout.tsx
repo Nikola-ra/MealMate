@@ -7,12 +7,6 @@ export default function RootLayout() {
   const tokenCache = token
   const publishableKey = process.env.EXPO_PUBLIC_CLERK_PUBLISHABLE_KEY!
 
-  if (!publishableKey) {
-    throw new Error(
-      "Missing Publishable Key. Please set EXPO_PUBLIC_CLERK_PUBLISHABLE_KEY in your .env"
-    )
-  }
-
   return (
     <ClerkProvider tokenCache={tokenCache} publishableKey={publishableKey}>
       <ClerkLoaded>
@@ -28,15 +22,12 @@ function InitialLayout() {
   const router = useRouter()
 
   useEffect(() => {
-    if (!isLoaded) return
-
     const inTabsGroup = segments[0] === "(auth)"
 
-    const homeRoute = "/home"
     if (isSignedIn && !inTabsGroup) {
-      router.replace("/home" as Href)
+      router.replace("/home")
     } else if (!isSignedIn) {
-      router.replace("/login" as Href)
+      router.replace("/login")
     }
     console.log(isLoaded, isSignedIn)
   }, [isSignedIn])

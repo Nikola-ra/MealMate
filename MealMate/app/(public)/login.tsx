@@ -18,7 +18,24 @@ export default function LoginPage() {
   const [password, setPassword] = useState("")
   const [loading, setLoading] = useState(false)
 
-  const onSignInPress = async () => {}
+  const onSignInPress = async () => {
+    if (!isLoaded) return
+
+    setLoading(true)
+    try {
+      const completeSignIn = await signIn.create({
+        identifier: emailAddress,
+        password,
+      })
+
+      // This indicates the user is signed in
+      await setActive({ session: completeSignIn.createdSessionId })
+    } catch (err: any) {
+      alert(err.errors[0].message)
+    } finally {
+      setLoading(false)
+    }
+  }
 
   return (
     <View>

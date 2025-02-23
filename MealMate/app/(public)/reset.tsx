@@ -1,7 +1,15 @@
-import { View, StyleSheet, TextInput, Button } from "react-native"
+import {
+  View,
+  StyleSheet,
+  TextInput,
+  Button,
+  Pressable,
+  Text,
+} from "react-native"
 import React, { useState } from "react"
 import { Stack } from "expo-router"
 import { useSignIn } from "@clerk/clerk-expo"
+import CustomInput from "@/components/CustomInput"
 
 export default function ResetPage() {
   const { signIn, setActive } = useSignIn()
@@ -45,46 +53,55 @@ export default function ResetPage() {
   }
 
   return (
-    <View>
+    <View className="flex flex-col items-center gap-4 h-screen justify-center p-4">
       <Stack.Screen options={{ headerBackVisible: !successfulCreation }} />
 
       {!successfulCreation && (
         <>
-          <TextInput
-            autoCapitalize="none"
-            placeholder="simon@galaxies.dev"
+          <CustomInput
+            label="E-mail"
+            placeholder="Your account email"
             value={emailAddress}
             onChangeText={setEmailAddress}
           />
 
-          <Button
+          <Pressable
+            className="bg-green-500 px-6 py-3 rounded-lg my-4"
             onPress={onRequestReset}
-            title="Send Reset Email"
-            color={"#6c47ff"}
-          ></Button>
+          >
+            <Text className="text-white font-bold text-xl">
+              Change Password
+            </Text>
+          </Pressable>
         </>
       )}
 
       {successfulCreation && (
         <>
-          <View>
-            <TextInput
+          <View className="flex flex-col items-center gap-4 h-screen justify-center p-4">
+            <CustomInput
+              label="Code"
+              placeholder="Your code..."
               value={code}
-              placeholder="Code..."
               onChangeText={setCode}
             />
-            <TextInput
-              placeholder="New password"
+
+            <CustomInput
+              label="New Password"
+              placeholder="Enter New Password"
               value={password}
               onChangeText={setPassword}
-              secureTextEntry
             />
+
+            <Pressable
+              className="bg-green-500 px-6 py-3 rounded-lg my-4"
+              onPress={onReset}
+            >
+              <Text className="text-white font-bold text-xl">
+                Change Password
+              </Text>
+            </Pressable>
           </View>
-          <Button
-            onPress={onReset}
-            title="Set new Password"
-            color={"#6c47ff"}
-          ></Button>
         </>
       )}
     </View>

@@ -14,17 +14,17 @@ export default function PublicLayout() {
     >
       <Stack.Screen
         name="login"
-        options={{ headerTitle: "MealMate" }}
+        options={{ headerShown: false }}
       ></Stack.Screen>
 
       <Stack.Screen
         name="register"
-        options={{ headerTitle: "Create Account" }}
+        options={{ headerShown: false }}
       ></Stack.Screen>
 
       <Stack.Screen
         name="reset"
-        options={{ headerTitle: "Reset Password" }}
+        options={{ headerShown: false }}
       ></Stack.Screen>
     </Stack>
   )

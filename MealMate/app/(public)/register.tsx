@@ -1,8 +1,9 @@
-import { Button, Text, TextInput, View } from "react-native"
-import React, { useState } from "react"
+import { Button, Pressable, Text, TextInput, View } from "react-native"
+import React, { useEffect, useRef, useState } from "react"
 import { useSignUp } from "@clerk/clerk-expo"
 import { Stack } from "expo-router"
 import Spinner from "react-native-loading-spinner-overlay"
+import CustomInput from "@/components/CustomInput"
 
 export default function signUpPage() {
   const { isLoaded, signUp, setActive } = useSignUp()
@@ -12,6 +13,14 @@ export default function signUpPage() {
   const [pendingVerification, setPendingVerification] = useState(false)
   const [code, setCode] = useState("")
   const [loading, setLoading] = useState(false)
+
+  const isMounted = useRef(true) // Track if the component is mounted
+
+  useEffect(() => {
+    return () => {
+      isMounted.current = false // Set to false when unmounted
+    }
+  }, [])
 
   async function onSignUpPress() {
     if (!isLoaded) return
@@ -24,20 +33,28 @@ export default function signUpPage() {
 
     try {
       // Create the user on Clerk
-      await signUp.create({
-        emailAddress,
-        password,
-      })
+      if (isMounted.current) {
+        await signUp.create({
+          emailAddress,
+          password,
+        })
 
-      // Send verification Email
-      await signUp.prepareEmailAddressVerification({ strategy: "email_code" })
+        // Send verification Email
+        await signUp.prepareEmailAddressVerification({ strategy: "email_code" })
 
-      // change the UI to verify the email address
-      setPendingVerification(true)
+        // change the UI to verify the email address
+        setPendingVerification(true)
+      }
     } catch (err: any) {
-      alert(err.errors[0]?.message || "Something went wrong. Please try again.")
+      if (isMounted.current) {
+        alert(
+          err.errors[0]?.message || "Something went wrong. Please try again."
+        )
+      }
     } finally {
-      setLoading(false)
+      if (isMounted.current) {
+        setLoading(false)
+      }
     }
   }
   async function onPressVerify() {
@@ -58,49 +75,53 @@ export default function signUpPage() {
       setLoading(false)
     }
   }
+
   return (
-    <View>
+    <View className="flex flex-col items-center gap-4 h-screen justify-center p-4">
       <Stack.Screen options={{ headerBackVisible: !pendingVerification }} />
       <Spinner visible={loading} />
 
       {!pendingVerification && (
         <>
-          <TextInput
-            autoCapitalize="none"
-            placeholder="simon@galaxies.dev"
+          <CustomInput
+            label="E-mail"
+            placeholder="example@gmail.com"
             value={emailAddress}
             onChangeText={setEmailAddress}
           />
-          <TextInput
-            placeholder="password"
+
+          <CustomInput
+            label="Password"
+            placeholder="Password"
             value={password}
             onChangeText={setPassword}
-            secureTextEntry
+            secureTextEntry={true}
           />
 
-          <Button
+          <Pressable
+            className="bg-green-500 px-6 py-3 rounded-lg my-4"
             onPress={onSignUpPress}
-            title="Sign up"
-            color={"#6c47ff"}
-          ></Button>
+          >
+            <Text className="text-white font-bold text-xl">Register</Text>
+          </Pressable>
         </>
       )}
 
       {pendingVerification && (
-        <>
-          <View>
-            <TextInput
-              value={code}
-              placeholder="Code..."
-              onChangeText={setCode}
-            />
-          </View>
-          <Button
+        <View className="flex flex-col items-center gap-4 h-screen justify-center p-4">
+          <CustomInput
+            label="Code"
+            placeholder="Your code..."
+            value={code}
+            onChangeText={setCode}
+          />
+          <Pressable
+            className="bg-green-500 px-6 py-3 rounded-lg my-4"
             onPress={onPressVerify}
-            title="Verify Email"
-            color={"#6c47ff"}
-          ></Button>
-        </>
+          >
+            <Text className="text-white font-bold text-xl">Create Account</Text>
+          </Pressable>
+        </View>
       )}
     </View>
   )

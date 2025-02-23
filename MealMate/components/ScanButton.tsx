@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react"
 import { Text, Pressable, View, StyleSheet } from "react-native"
-import { CameraView, useCameraPermissions } from "expo-camera"
+import { CameraView, Camera, useCameraPermissions } from "expo-camera"
+import FontAwesome from "@expo/vector-icons/FontAwesome"
 
 export default function ScanButton() {
   const [permission, requestPermission] = useCameraPermissions()
@@ -12,37 +13,49 @@ export default function ScanButton() {
     }
   }, [permission])
 
-  if (!permission) return null
-
-  if (!permission.granted) {
+  if (!permission?.granted) {
     return (
-      <Pressable style={styles.permissionButton} onPress={requestPermission}>
-        <Text style={styles.buttonText}>Grant Camera Permission</Text>
+      <Pressable
+        className="bg-red-500 px-6 py-3 rounded-lg mt-4"
+        onPress={requestPermission}
+      >
+        <Text className="text-white font-bold text-lg text-center">
+          Grant Camera Permission
+        </Text>
       </Pressable>
     )
   }
 
   return (
     <>
-      <Pressable style={styles.scanButton} onPress={() => setScanning(true)}>
-        <Text style={styles.buttonText}>Scan Product</Text>
+      {/* Scan Button */}
+      <Pressable
+        className="bg-green-500 px-6 py-5 rounded-lg mt-4 flex flex-row items-center justify-center gap-2"
+        onPress={() => setScanning(true)}
+      >
+        <FontAwesome name="barcode" size={20} color="white" />
+        <Text className="text-white font-bold text-lg">Scan Product</Text>
       </Pressable>
 
+      {/* Camera Modal */}
       {scanning && (
-        <View style={styles.cameraOverlay}>
+        <View className="absolute top-0 left-0 w-full h-full bg-black flex justify-center items-center">
+          {/* Styled CameraView */}
           <CameraView
             style={styles.camera}
-            barcodeScannerSettings={{ barcodeTypes: ["qr", "ean13", "upc_a"] }}
             onBarcodeScanned={({ data }) => {
               setScanning(false)
               alert(`Scanned: ${data}`)
             }}
           />
+          {/* Close Button */}
           <Pressable
-            style={styles.closeButton}
+            className="absolute bottom-10 bg-red-500 px-6 py-3 rounded-lg z-50"
             onPress={() => setScanning(false)}
           >
-            <Text style={styles.buttonText}>Close</Text>
+            <Text className="text-white font-bold text-lg text-center">
+              Close
+            </Text>
           </Pressable>
         </View>
       )}
@@ -51,50 +64,11 @@ export default function ScanButton() {
 }
 
 const styles = StyleSheet.create({
-  scanButton: {
-    backgroundColor: "green",
-    paddingVertical: 12,
-    paddingHorizontal: 20,
-    borderRadius: 8,
-    alignItems: "center",
-    justifyContent: "center",
-    marginTop: 10,
-  },
-  permissionButton: {
-    backgroundColor: "red",
-    paddingVertical: 12,
-    paddingHorizontal: 20,
-    borderRadius: 8,
-    alignItems: "center",
-    justifyContent: "center",
-    marginTop: 10,
-  },
-  buttonText: {
-    color: "white",
-    fontWeight: "bold",
-    fontSize: 16,
-  },
-  cameraOverlay: {
-    position: "absolute",
-    top: 0,
-    left: 0,
-    width: "100%",
-    height: "100%",
-    backgroundColor: "black",
-    justifyContent: "center",
-    alignItems: "center",
-    zIndex: 1000,
-  },
   camera: {
+    flex: 1,
     width: "100%",
     height: "100%",
-  },
-  closeButton: {
     position: "absolute",
-    bottom: 100,
-    backgroundColor: "red",
-    paddingVertical: 12,
-    paddingHorizontal: 20,
-    borderRadius: 8,
+    zIndex: 50,
   },
 })

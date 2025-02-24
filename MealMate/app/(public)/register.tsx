@@ -1,4 +1,4 @@
-import { Button, Pressable, Text, TextInput, View } from "react-native"
+import { Button, Image, Pressable, Text, TextInput, View } from "react-native"
 import React, { useEffect, useRef, useState } from "react"
 import { useSignUp } from "@clerk/clerk-expo"
 import { Stack } from "expo-router"
@@ -77,12 +77,16 @@ export default function signUpPage() {
   }
 
   return (
-    <View className="flex flex-col items-center gap-4 h-screen justify-center p-4">
+    <View className="flex flex-col items-center gap-4 h-screen justify-center p-4 bg-white">
       <Stack.Screen options={{ headerBackVisible: !pendingVerification }} />
       <Spinner visible={loading} />
 
       {!pendingVerification && (
         <>
+          <Image
+            source={require("@/assets/images/Bianco.png")}
+            className="w-full h-32 mb-16"
+          />
           <CustomInput
             label="E-mail"
             placeholder="example@gmail.com"
@@ -108,7 +112,11 @@ export default function signUpPage() {
       )}
 
       {pendingVerification && (
-        <View className="flex flex-col items-center gap-4 h-screen justify-center p-4">
+        <View className="flex flex-col items-center gap-4 h-screen justify-center p-4 bg-white">
+          <Image
+            source={require("@/assets/images/Bianco.png")}
+            className="w-full h-32 mb-16"
+          />
           <CustomInput
             label="Code"
             placeholder="Your code..."

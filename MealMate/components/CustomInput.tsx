@@ -15,7 +15,7 @@ export default function CustomInput({
 }) {
   return (
     <View className="relative w-4/5">
-      <Text className="absolute -top-3 left-4 z-50 bg-gray-100 px-1 text-green-500">
+      <Text className="absolute -top-3 left-4 z-50 bg-white px-1 text-green-500">
         {label}
       </Text>
       <TextInput

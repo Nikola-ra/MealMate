@@ -5,6 +5,7 @@ import {
   Button,
   Pressable,
   Text,
+  Image,
 } from "react-native"
 import React, { useState } from "react"
 import { Stack } from "expo-router"
@@ -53,11 +54,15 @@ export default function ResetPage() {
   }
 
   return (
-    <View className="flex flex-col items-center gap-4 h-screen justify-center p-4">
+    <View className="flex flex-col items-center gap-4 h-screen justify-center p-4 bg-white">
       <Stack.Screen options={{ headerBackVisible: !successfulCreation }} />
 
       {!successfulCreation && (
         <>
+          <Image
+            source={require("@/assets/images/Bianco.png")}
+            className="w-full h-32 mb-16"
+          />
           <CustomInput
             label="E-mail"
             placeholder="Your account email"
@@ -79,6 +84,10 @@ export default function ResetPage() {
       {successfulCreation && (
         <>
           <View className="flex flex-col items-center gap-4 h-screen justify-center p-4">
+            <Image
+              source={require("@/assets/images/Bianco.png")}
+              className="w-full h-32 mb-16"
+            />
             <CustomInput
               label="Code"
               placeholder="Your code..."

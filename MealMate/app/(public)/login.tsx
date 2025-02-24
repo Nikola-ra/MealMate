@@ -44,12 +44,12 @@ export default function LoginPage() {
   }
 
   return (
-    <View className="flex flex-col items-center gap-4 h-screen justify-center p-4">
+    <View className="flex flex-col items-center gap-4 h-screen justify-center p-4 bg-white">
       <Spinner visible={loading} />
 
       <Image
-        source={require("@/assets/images/Logo.png")}
-        className="w-32 h-32"
+        source={require("@/assets/images/Bianco.png")}
+        className="w-full h-32 mb-16"
       />
 
       <CustomInput

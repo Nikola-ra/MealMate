@@ -7,7 +7,7 @@ export default function LogoutButton() {
   const { signOut } = useAuth()
   return (
     <Pressable onPress={() => signOut()}>
-      <FontAwesome name="sign-out" size={28} color="black" />
+      <FontAwesome name="sign-out" size={28} className="fill-green-500" />
     </Pressable>
   )
 }

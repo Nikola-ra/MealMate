@@ -1,4 +1,7 @@
 import mongoose from "mongoose"
+const dotenv = require("dotenv")
+
+dotenv.config()
 
 const MONGO_URI =
   process.env.NODE_ENV === "production"

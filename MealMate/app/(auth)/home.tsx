@@ -1,7 +1,6 @@
 import { Text, View } from "react-native"
 import React from "react"
 import { useUser } from "@clerk/clerk-expo"
-import LogoutButton from "@/components/LogoutButton"
 import ScanButton from "@/components/ScanButton"
 
 export default function HomePage() {

@@ -5,7 +5,7 @@ interface IUser extends Document {
   ingredients: mongoose.Types.ObjectId[] // List of scanned product IDs
   recipes: mongoose.Types.ObjectId[] // List of saved recipes
   createdAt: Date
-  updatedAt: Date
+  updategitdAt: Date
 }
 
 const userSchema = new Schema<IUser>(

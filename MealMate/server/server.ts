@@ -1,21 +1,19 @@
+import "tsconfig-paths/register"
 const express = require("express")
-const bodyParser = require("body-parser")
-import { connectDB } from "./db/mongo"
 const dotenv = require("dotenv")
-import clerkWebhookRouter from "../app/api/webhooks/clerk/route"
+import clerkWebhookRouter from "./api/webhooks/clerk/route"
 
 dotenv.config()
 
 const app = express()
-const PORT = process.env.PORT
-
-//DB Connection
-connectDB()
+const PORT = process.env.PORT || 3000
 
 // Middleware
-app.use(bodyParser.json())
+app.use(express.json()) // For JSON parsing
+app.use(express.urlencoded({ extended: true })) // For URL-encoded payloads
+app.use(express.raw({ type: "application/json" })) // For raw JSON (Clerk needs this)
 
-//Routes
+// Routes
 app.use("/api/webhooks/clerk", clerkWebhookRouter)
 
 app.listen(PORT, () => {

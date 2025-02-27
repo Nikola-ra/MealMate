@@ -1,5 +1,6 @@
+import { createUser } from "@/server/users"
+
 const express = require("express")
-const bodyParser = require("body-parser")
 const { Webhook } = require("svix")
 
 const router = express.Router()
@@ -9,7 +10,7 @@ router.post(
   // This is a generic method to parse the contents of the payload.
   // Depending on the framework, packages, and configuration, this may be
   // different or not required.
-  bodyParser.raw({ type: "application/json" }),
+  express.raw({ type: "application/json" }),
 
   async (req: any, res: any) => {
     const SIGNING_SECRET = process.env.CLERK_WEBHOOK_SECRET
@@ -59,17 +60,31 @@ router.post(
       })
     }
 
-    // Do something with payload
-    // For this guide, log payload to console
-    const { id } = evt.data
-    const eventType = evt.type
-    console.log(`Received webhook with ID ${id} and event type of ${eventType}`)
-    console.log("Webhook payload:", evt.data)
+    try {
+      switch (evt.type) {
+        case "user.created":
+          const { id } = evt.data
+          await createUser({
+            clerkUserId: id,
+            ingredients: [],
+            recipes: [],
+          })
+          console.log(`New user created: ${id}`)
+          break
 
-    return void res.status(200).json({
-      success: true,
-      message: "Webhook received",
-    })
+        case "user.deleted":
+          console.log(`User deleted: ${evt.data.id}`)
+          break
+
+        default:
+          console.log(`Unhandled webhook event: ${evt.type}`)
+      }
+
+      res.status(200).json({ success: true })
+    } catch (error) {
+      console.error("Webhook error:", error)
+      res.status(500).json({ success: false, message: "Internal server error" })
+    }
   }
 )
 

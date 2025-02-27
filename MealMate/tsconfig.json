@@ -3,10 +3,9 @@
     "jsx": "react",
     "esModuleInterop": true,
     "strict": true,
+    "baseUrl": ".",
     "paths": {
-      "@/*": [
-        "./*"
-      ]
+      "@/*": ["./*"]
     }
   },
   "include": [

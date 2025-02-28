@@ -2,8 +2,9 @@ import React, { useState, useEffect } from "react"
 import { Text, Pressable, View, StyleSheet } from "react-native"
 import { CameraView, Camera, useCameraPermissions } from "expo-camera"
 import FontAwesome from "@expo/vector-icons/FontAwesome"
+import { cn } from "@/lib/utils"
 
-export default function ScanButton() {
+export default function ScanButton({ className = "" }: { className?: string }) {
   const [permission, requestPermission] = useCameraPermissions()
   const [scanning, setScanning] = useState(false)
 
@@ -30,7 +31,10 @@ export default function ScanButton() {
     <>
       {/* Scan Button */}
       <Pressable
-        className="bg-green-500 px-6 py-5 rounded-lg mt-4 flex flex-row items-center justify-center gap-2"
+        className={cn(
+          "bg-green-500 px-6 py-5 rounded-lg flex flex-row items-center justify-center gap-2",
+          className
+        )}
         onPress={() => setScanning(true)}
       >
         <FontAwesome name="barcode" size={20} color="white" />

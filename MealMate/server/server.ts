@@ -1,12 +1,12 @@
 import "tsconfig-paths/register"
 const express = require("express")
-const dotenv = require("dotenv")
 import clerkWebhookRouter from "./api/webhooks/clerk/route"
+import dotenv from "dotenv"
 
 dotenv.config()
 
 const app = express()
-const PORT = process.env.PORT || 3000
+const PORT = process.env.EXPO_PUBLIC_PORT || 3000
 
 // Middleware
 app.use(express.json()) // For JSON parsing

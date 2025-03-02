@@ -1,9 +1,9 @@
 import mongoose from "mongoose"
-const dotenv = require("dotenv")
+import dotenv from "dotenv"
 
 dotenv.config()
 
-const MONGO_URI = process.env.MONGO_URI
+const MONGO_URI = process.env.EXPO_PUBLIC_MONGO_URI
 
 if (!MONGO_URI) {
   throw new Error("MongoDB URI is missing!")
@@ -18,9 +18,11 @@ export async function connectDB() {
   try {
     await mongoose.connect(MONGO_URI as string, {
       dbName:
-        process.env.NODE_ENV === "production" ? "production" : "development",
+        process.env.EXPO_PUBLIC_NODE_ENV === "production"
+          ? "production"
+          : "development",
     })
-    console.log(`Connected to MongoDB (${process.env.NODE_ENV})`)
+    console.log(`Connected to MongoDB (${process.env.EXPO_PUBLIC_NODE_ENV})`)
   } catch (error) {
     console.error("MongoDB Connection Error:", error)
     throw error

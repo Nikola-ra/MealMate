@@ -1,6 +1,6 @@
-import { connectDB } from "./db/mongo"
-import { User } from "../schemas/User"
 import mongoose from "mongoose"
+import { connectDB } from "./mongo"
+import { User } from "@/schemas/User"
 
 export async function getUsers() {
   await connectDB()

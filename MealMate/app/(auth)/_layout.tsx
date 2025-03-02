@@ -11,7 +11,7 @@ export default function HomeLayout() {
           name="home"
           options={{
             headerTitle: "Home",
-            headerRight: () => <LogoutButton />,
+            headerRight: () => <LogoutButton className="mr-5" />,
             tabBarActiveTintColor: "green", // Change active tab text color
             tabBarInactiveTintColor: "gray",
             tabBarIcon: ({ color }) => (

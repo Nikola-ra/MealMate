@@ -1,4 +1,4 @@
-import { createUser } from "@/server/users"
+import { createUser } from "@/server/db/users"
 
 const express = require("express")
 const { Webhook } = require("svix")

@@ -3,8 +3,15 @@ import { Text, Pressable, View, StyleSheet } from "react-native"
 import { CameraView, Camera, useCameraPermissions } from "expo-camera"
 import FontAwesome from "@expo/vector-icons/FontAwesome"
 import { cn } from "@/lib/utils"
+import { newProduct } from "@/server/db/products"
 
-export default function ScanButton({ className = "" }: { className?: string }) {
+export default function ScanButton({
+  className = "",
+  userId,
+}: {
+  className?: string
+  userId: string
+}) {
   const [permission, requestPermission] = useCameraPermissions()
   const [scanning, setScanning] = useState(false)
 
@@ -29,10 +36,9 @@ export default function ScanButton({ className = "" }: { className?: string }) {
 
   return (
     <>
-      {/* Scan Button */}
       <Pressable
         className={cn(
-          "bg-green-500 px-6 py-5 rounded-lg flex flex-row items-center justify-center gap-2",
+          "bg-green-500 px-6 py-5 rounded-xl flex flex-row items-center justify-center gap-2",
           className
         )}
         onPress={() => setScanning(true)}
@@ -41,18 +47,17 @@ export default function ScanButton({ className = "" }: { className?: string }) {
         <Text className="text-white font-bold text-lg">Scan Product</Text>
       </Pressable>
 
-      {/* Camera Modal */}
       {scanning && (
         <View className="absolute top-0 left-0 w-full h-full bg-black flex justify-center items-center">
-          {/* Styled CameraView */}
           <CameraView
             style={styles.camera}
             onBarcodeScanned={({ data }) => {
               setScanning(false)
+              newProduct({ userId, barCode: data })
               alert(`Scanned: ${data}`)
             }}
           />
-          {/* Close Button */}
+
           <Pressable
             className="absolute bottom-10 bg-red-500 px-6 py-3 rounded-lg z-50"
             onPress={() => setScanning(false)}

@@ -10,10 +10,23 @@
     "jsx": "react",
     "baseUrl": ".",
     "paths": {
+<<<<<<< HEAD
       "@/*": ["./*"],
       "@server/*": ["server/*"]
     }
   },
   "include": ["**/*.ts", "**/*.tsx", "nativewind-env.d.ts", "server/server.js"],
+=======
+      "@/*": ["./*"]
+    }
+  },
+  "include": [
+    "**/*.ts",
+    "**/*.tsx",
+    ".expo/types/**/*.ts",
+    "expo-env.d.ts",
+    "nativewind-env.d.ts"
+  ],
+>>>>>>> parent of b4542ade (Progetto prima della creazione di api enpoint per call a server side functions)
   "extends": "expo/tsconfig.base"
 }

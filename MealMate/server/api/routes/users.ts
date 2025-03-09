@@ -6,4 +6,4 @@ router.post("/", async (req: any, res: any) => {
   res.status(201).send("User created")
 })
 
-module.exports = router
+export default router

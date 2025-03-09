@@ -1,4 +1,4 @@
-import { createUser } from "@/server/db/users.js"
+import { createUser } from "@/server/db/users"
 
 const express = require("express")
 const { Webhook } = require("svix")
@@ -88,4 +88,4 @@ router.post(
   }
 )
 
-module.exports = router
+export default router

@@ -2,10 +2,9 @@
   "name": "mealmate",
   "main": "expo-router/entry",
   "version": "1.0.0",
-  "type": "commonjs",
   "scripts": {
     "build": "tsc",
-    "server": "node ./server/server.js",
+    "server": "ts-node -r tsconfig-paths/register -r dotenv/config ./server/server.ts",
     "start": "expo start",
     "reset-project": "node ./scripts/reset-project.js",
     "android": "expo start --android",

@@ -3,7 +3,7 @@ const dotenv = require("dotenv")
 
 dotenv.config()
 
-const MONGO_URI = process.env.MONGO_URI
+const MONGO_URI = process.env.EXPO_PUBLIC_MONGO_URI
 
 if (!MONGO_URI) {
   throw new Error("MongoDB URI is missing!")

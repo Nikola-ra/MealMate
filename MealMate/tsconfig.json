@@ -18,8 +18,7 @@
     "**/*.tsx",
     "nativewind-env.d.ts",
     ".expo/types/**/*.ts",
-    "expo-env.d.ts",
-    "nativewind-env.d.ts"
+    "expo-env.d.ts"
   ],
   "extends": "expo/tsconfig.base"
 }

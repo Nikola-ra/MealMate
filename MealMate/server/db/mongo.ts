@@ -1,9 +1,9 @@
 import mongoose from "mongoose"
 import dotenv from "dotenv"
 
-dotenv.config()
+import Constants from "expo-constants"
 
-const MONGO_URI = process.env.EXPO_PUBLIC_MONGO_URI
+const MONGO_URI = Constants.expoConfig?.extra?.EXPO_PUBLIC_MONGO_URI
 
 if (!MONGO_URI) {
   throw new Error("MongoDB URI is missing!")

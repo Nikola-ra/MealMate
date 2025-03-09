@@ -1,9 +1,9 @@
-import { Text, View } from "react-native"
-import React, { useEffect, useState } from "react"
 import { useUser } from "@clerk/clerk-expo"
-import ScanButton from "@/components/ScanButton"
+import { useEffect, useState } from "react"
+import { Text, View } from "react-native"
+import React from "react"
 import { getUserProducts } from "@/server/db/products"
-import ProductGrid from "@/components/ProductGrid"
+import ScanButton from "@/components/ScanButton"
 
 export default function HomePage() {
   const { user } = useUser()
@@ -33,7 +33,7 @@ export default function HomePage() {
       <Text className="font-semibold text-red-600 text-3xl">
         Hello {user.emailAddresses[0].emailAddress}
       </Text>
-      <ProductGrid products={products} />
+      {/* <ProductGrid products={products} /> */}
       <ScanButton userId={id} className="absolute bottom-5 right-3" />
     </View>
   )

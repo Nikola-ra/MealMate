@@ -1,0 +1,7 @@
+POST "/api/routes/users"
+Content-Type: application/json
+
+{
+    "barcode": "aowdhwd",
+    "text": "aowdhwd"
+}

@@ -2,7 +2,7 @@ import LogoutButton from "@/components/LogoutButton"
 import FontAwesome from "@expo/vector-icons/FontAwesome"
 import { Tabs } from "expo-router"
 import React from "react"
-import { Text } from "react-native"
+
 export default function HomeLayout() {
   return (
     <>

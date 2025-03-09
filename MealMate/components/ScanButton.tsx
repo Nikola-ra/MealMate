@@ -3,7 +3,6 @@ import { Text, Pressable, View, StyleSheet } from "react-native"
 import { CameraView, Camera, useCameraPermissions } from "expo-camera"
 import FontAwesome from "@expo/vector-icons/FontAwesome"
 import { cn } from "@/lib/utils"
-import { newProduct } from "@/server/db/products"
 
 export default function ScanButton({
   className = "",
@@ -53,7 +52,10 @@ export default function ScanButton({
             style={styles.camera}
             onBarcodeScanned={({ data }) => {
               setScanning(false)
-              newProduct({ userId, barCode: data })
+              fetch("/api/routes/users", {
+                method: "POST",
+              })
+
               alert(`Scanned: ${data}`)
             }}
           />

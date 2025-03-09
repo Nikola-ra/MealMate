@@ -10,7 +10,6 @@
     "jsx": "react",
     "baseUrl": ".",
     "paths": {
-      "@server/*": ["server/*"],
       "@/*": ["./*"]
     }
   },
@@ -18,9 +17,9 @@
     "**/*.ts",
     "**/*.tsx",
     "nativewind-env.d.ts",
-    "server/server.js",
     ".expo/types/**/*.ts",
-    "expo-env.d.ts"
+    "expo-env.d.ts",
+    "nativewind-env.d.ts"
   ],
   "extends": "expo/tsconfig.base"
 }

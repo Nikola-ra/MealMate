@@ -1,17 +1,7 @@
 import mongoose from "mongoose"
 const dotenv = require("dotenv")
 
-import Constants from "expo-constants"
-
-<<<<<<< HEAD
-<<<<<<< HEAD
-const MONGO_URI = Constants.expoConfig?.extra?.EXPO_PUBLIC_MONGO_URI
-=======
 const MONGO_URI = process.env.MONGO_URI
->>>>>>> parent of b4542ade (Progetto prima della creazione di api enpoint per call a server side functions)
-=======
-const MONGO_URI = process.env.MONGO_URI
->>>>>>> parent of b4542ade (Progetto prima della creazione di api enpoint per call a server side functions)
 
 if (!MONGO_URI) {
   throw new Error("MongoDB URI is missing!")

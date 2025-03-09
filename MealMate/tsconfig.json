@@ -11,12 +11,15 @@
     "baseUrl": ".",
     "paths": {
 <<<<<<< HEAD
+<<<<<<< HEAD
       "@/*": ["./*"],
       "@server/*": ["server/*"]
     }
   },
   "include": ["**/*.ts", "**/*.tsx", "nativewind-env.d.ts", "server/server.js"],
 =======
+=======
+>>>>>>> parent of b4542ade (Progetto prima della creazione di api enpoint per call a server side functions)
       "@/*": ["./*"]
     }
   },

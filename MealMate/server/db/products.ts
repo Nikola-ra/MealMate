@@ -43,7 +43,8 @@ export async function newProduct({
       await product.save()
     }
 
-    const user = await User.findById(userId)
+    const user = await User.findOne({ clerkUserId: userId })
+
     if (!user) {
       throw new Error("User not found")
     }
@@ -52,7 +53,6 @@ export async function newProduct({
       user.ingredients.push(product._id as any)
       await user.save()
     }
-
     return product
   } catch (error) {
     console.error("Error handling product:", error)
@@ -63,7 +63,7 @@ export async function newProduct({
 export async function getUserProducts(userId: string) {
   await connectDB()
 
-  const user = await User.findById(userId).populate({
+  const user = await User.findOne({ clerkUserId: userId }).populate({
     path: "ingredients",
     select: "barcode name imageUrl description",
   })

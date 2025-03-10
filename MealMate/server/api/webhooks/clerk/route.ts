@@ -2,6 +2,9 @@ import { createUser } from "@/server/db/users"
 
 const express = require("express")
 const { Webhook } = require("svix")
+const dotenv = require("dotenv")
+
+dotenv.config()
 
 const router = express.Router()
 
@@ -13,11 +16,11 @@ router.post(
   express.raw({ type: "application/json" }),
 
   async (req: any, res: any) => {
-    const SIGNING_SECRET = process.env.CLERK_WEBHOOK_SECRET
+    const SIGNING_SECRET = process.env.EXPO_PUBLIC_CLERK_WEBHOOK_SECRET
 
     if (!SIGNING_SECRET) {
       throw new Error(
-        "Error: Please add CLERK_WEBHOOK_SECRET from Clerk Dashboard to .env"
+        "Error: Please add EXPO_PUBLIC_CLERK_WEBHOOK_SECRET from Clerk Dashboard to .env"
       )
     }
 

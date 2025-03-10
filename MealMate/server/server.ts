@@ -2,6 +2,7 @@ import "tsconfig-paths/register"
 const express = require("express")
 const dotenv = require("dotenv")
 import clerkWebhookRouter from "./api/webhooks/clerk/route"
+import userRouter from "./api/routes/users"
 
 dotenv.config()
 
@@ -14,6 +15,7 @@ app.use(express.urlencoded({ extended: true })) // For URL-encoded payloads
 app.use(express.raw({ type: "application/json" })) // For raw JSON (Clerk needs this)
 
 // Routes
+app.use("/api/routes/users", userRouter)
 app.use("/api/webhooks/clerk", clerkWebhookRouter)
 
 app.listen(PORT, () => {

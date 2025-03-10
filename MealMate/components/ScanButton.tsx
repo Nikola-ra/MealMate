@@ -3,6 +3,7 @@ import { Text, Pressable, View, StyleSheet } from "react-native"
 import { CameraView, Camera, useCameraPermissions } from "expo-camera"
 import FontAwesome from "@expo/vector-icons/FontAwesome"
 import { cn } from "@/lib/utils"
+import { useUser } from "@clerk/clerk-expo"
 
 export default function ScanButton({
   className = "",
@@ -54,7 +55,22 @@ export default function ScanButton({
               setScanning(false)
               fetch("/api/routes/users", {
                 method: "POST",
+                headers: {
+                  "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                  barCode: data,
+                  userId: userId,
+                }),
               })
+                .then(response => response.json())
+                .then(result => {
+                  alert(`Product added: ${result.message}`)
+                })
+                .catch(error => {
+                  console.error("Error:", error)
+                  alert("Failed to add product.")
+                })
 
               alert(`Scanned: ${data}`)
             }}

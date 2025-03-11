@@ -53,7 +53,7 @@ export default function ScanButton({
             style={styles.camera}
             onBarcodeScanned={({ data }) => {
               setScanning(false)
-              fetch("/api/routes/users", {
+              fetch(`http://${process.env.EXPO_PUBLIC_SOCKET}/products`, {
                 method: "POST",
                 headers: {
                   "Content-Type": "application/json",
@@ -71,8 +71,6 @@ export default function ScanButton({
                   console.error("Error:", error)
                   alert("Failed to add product.")
                 })
-
-              alert(`Scanned: ${data}`)
             }}
           />
 

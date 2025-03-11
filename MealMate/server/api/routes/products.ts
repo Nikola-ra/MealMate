@@ -1,9 +1,28 @@
-import { newProduct } from "@/server/db/products"
+import { getUserProducts, newProduct } from "@/server/db/products"
 
 const express = require("express")
 
 const router = express.Router()
 
+router.get("/:id", async (req: any, res: any) => {
+  try {
+    const { id } = req.params
+    if (!id || id == null)
+      return res.status(400).json({ error: "Missing userId" })
+
+    const userProducts = await getUserProducts(id)
+
+    return res.status(200).json({
+      message: "Products fetched Successfully!",
+      products: userProducts,
+    })
+  } catch (error) {
+    console.error("Error in /products/:id: ", error)
+    return res.status(500).json({ error: "Internal server error" })
+  }
+})
+
+//CREAZIONE DI UN NUOVO PRODOTTO
 router.post("/", async (req: any, res: any) => {
   try {
     const { barCode, userId } = req.body

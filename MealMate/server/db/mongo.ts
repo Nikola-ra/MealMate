@@ -18,9 +18,11 @@ export async function connectDB() {
   try {
     await mongoose.connect(MONGO_URI as string, {
       dbName:
-        process.env.NODE_ENV === "production" ? "production" : "development",
+        process.env.EXPO_PUBLIC_NODE_ENV === "production"
+          ? "production"
+          : "development",
     })
-    console.log(`Connected to MongoDB (${process.env.NODE_ENV})`)
+    console.log(`Connected to MongoDB (${process.env.EXPO_PUBLIC_NODE_ENV})`)
   } catch (error) {
     console.error("MongoDB Connection Error:", error)
     throw error

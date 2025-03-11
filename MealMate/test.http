@@ -1,11 +1,11 @@
-POST http://localhost:3001/api/routes/users
+POST http://localhost:3001/products
 Content-Type: application/json
 
 {
-    "barCode": "3017620422003",
+    "barCode": "5449000000996",
     "userId": "user_2u94I2vSjP1M6OcnBmkbrmVReCb"
 }
 
 ###
 
-GET  http://localhost:3001/api/routes/users
+GET  http://localhost:3001/products/user_2u94I2vSjP1M6OcnBmkbrmVReCb

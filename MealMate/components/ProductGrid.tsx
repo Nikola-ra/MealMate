@@ -1,14 +1,14 @@
 import React from "react"
-import { Text, View } from "react-native"
+import { Image, ScrollView, Text, View } from "react-native"
 
 export default function ProductGrid({
   products,
 }: {
   products: {
     barcode: string
-    name: string
-    imageUrl: string
     description: string
+    imageUrl: string
+    name: string
   }[]
 }) {
   return (
@@ -32,9 +32,10 @@ function ProductCard({
   description: string
 }) {
   return (
-    <div className="bg-white p-4 m-2 rounded-lg shadow-md">
+    <View>
       <Text className="text-3xl font-bold">{name}</Text>
       <Text>{description}</Text>
-    </div>
+      <Image className="w-1/2 h-40" source={{ uri: imageUrl }}></Image>
+    </View>
   )
 }

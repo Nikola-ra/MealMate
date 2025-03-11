@@ -13,7 +13,7 @@ export default function HomePage() {
 
   useEffect(() => {
     if (!id) return
-    fetch(`http://192.168.1.7:3001/products/${id}`, {
+    fetch(`http://${process.env.EXPO_PUBLIC_SOCKET}/products/${id}`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",

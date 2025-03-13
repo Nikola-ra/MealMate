@@ -12,11 +12,11 @@ export default function ProductGrid({
   }[]
 }) {
   return (
-    <View className="w-full">
+    <ScrollView className="w-full p-4">
       {products.map(product => (
         <ProductCard key={product.name} {...product} />
       ))}
-    </View>
+    </ScrollView>
   )
 }
 
@@ -32,10 +32,13 @@ function ProductCard({
   description: string
 }) {
   return (
-    <View>
-      <Text className="text-3xl font-bold">{name}</Text>
-      <Text>{description}</Text>
-      <Image className="w-1/2 h-40" source={{ uri: imageUrl }}></Image>
+    <View className="bg-white flex flex-row gap-4 rounded-2xl shadow-md p-4 mb-4 mx-2">
+      <Image
+        className="w-24 h-24 rounded-lg"
+        source={{ uri: imageUrl }}
+        resizeMode="cover"
+      />
+      <Text className="text-xl font-semibold text-gray-800 flex-1">{name}</Text>
     </View>
   )
 }

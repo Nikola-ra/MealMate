@@ -8,9 +8,11 @@ import { useUser } from "@clerk/clerk-expo"
 export default function ScanButton({
   className = "",
   userId,
+  refreshProducts,
 }: {
   className?: string
   userId: string
+  refreshProducts: () => void
 }) {
   const [permission, requestPermission] = useCameraPermissions()
   const [scanning, setScanning] = useState(false)
@@ -66,6 +68,7 @@ export default function ScanButton({
                 .then(response => response.json())
                 .then(result => {
                   alert(`Product added: ${result.message}`)
+                  refreshProducts()
                 })
                 .catch(error => {
                   console.error("Error:", error)

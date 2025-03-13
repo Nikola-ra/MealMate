@@ -11,7 +11,7 @@ export default function HomePage() {
   const [refreshTrigger, setRefreshTrigger] = useState(0)
   const [products, setProducts] = useState([])
 
-  useEffect(() => {
+  function fetchProducts() {
     if (!id) return
     fetch(`http://${process.env.EXPO_PUBLIC_SOCKET}/products/${id}`, {
       method: "GET",
@@ -26,12 +26,15 @@ export default function HomePage() {
         return response.json()
       })
       .then(data => {
-        // console.log("Fetched products : ", data.products)
         setProducts(data.products)
       })
       .catch(error => {
         console.error("Error fetching data:", error)
       })
+  }
+
+  useEffect(() => {
+    fetchProducts()
   }, [id])
 
   // console.log(
@@ -42,12 +45,17 @@ export default function HomePage() {
   // )
 
   return (
-    <ScrollView className="relative flex flex-1 h-screen">
-      <Text className="font-semibold text-red-600 text-3xl">
-        Hello {user.emailAddresses[0].emailAddress}
-      </Text>
+    <View className="relative flex flex-1 h-screen">
+      {/* <Text className="font-bold text-gray-900 text-3xl p-4">
+        {user.emailAddresses[0].emailAddress}
+        Your Products
+      </Text> */}
       <ProductGrid products={products} />
-      <ScanButton userId={id} className="absolute bottom-5 right-3" />
-    </ScrollView>
+      <ScanButton
+        className="absolute bottom-5 right-3"
+        userId={id}
+        refreshProducts={fetchProducts}
+      />
+    </View>
   )
 }

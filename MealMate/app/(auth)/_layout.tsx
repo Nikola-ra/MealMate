@@ -10,9 +10,14 @@ export default function HomeLayout() {
         <Tabs.Screen
           name="home"
           options={{
-            headerTitle: "Home",
+            headerTitle: "Ingredients",
+            headerTitleStyle: {
+              fontSize: 30,
+              marginLeft: 9,
+              fontWeight: "bold",
+            },
             headerRight: () => <LogoutButton className="mr-5" />,
-            tabBarActiveTintColor: "green", // Change active tab text color
+            tabBarActiveTintColor: "green",
             tabBarInactiveTintColor: "gray",
             tabBarIcon: ({ color }) => (
               <FontAwesome size={28} name="home" color={"#22c55e"} />

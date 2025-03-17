@@ -37,12 +37,12 @@ export default function HomePage() {
     fetchProducts()
   }, [id])
 
-  // console.log(
-  //   "Type of products:",
-  //   console.log(Array.isArray(products)),
-  //   "Value:",
-  //   products
-  // )
+  console.log(
+    "Type of products:",
+    console.log(Array.isArray(products)),
+    "Value:",
+    products
+  )
 
   return (
     <View className="relative flex flex-1 h-screen">

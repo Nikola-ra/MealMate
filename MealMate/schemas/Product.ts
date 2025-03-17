@@ -1,4 +1,4 @@
-import mongoose, { Schema, Document, Model } from "mongoose"
+import mongoose, { Schema, Document, Model, Date } from "mongoose"
 
 interface IProduct extends Document {
   barcode: string // Unique product barcode

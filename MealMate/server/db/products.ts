@@ -1,13 +1,16 @@
 import { Product } from "@/schemas/Product"
 import { User } from "@/schemas/User"
 import { connectDB } from "./mongo"
+import mongoose from "mongoose"
 
 export async function newProduct({
   userId,
   barCode,
+  expiresAt, // New optional expiry date
 }: {
   userId: string
   barCode: string
+  expiresAt?: Date
 }) {
   await connectDB()
 
@@ -49,10 +52,25 @@ export async function newProduct({
       throw new Error("User not found")
     }
 
-    if (!user.ingredients.includes(product._id as any)) {
-      user.ingredients.push(product._id as any)
-      await user.save()
+    const existingProduct = user.ingredients.find(
+      item =>
+        item.productId.toString() ===
+        (product._id as mongoose.Types.ObjectId).toString()
+    )
+
+    if (existingProduct) {
+      // Update expiry date if provided
+      if (expiresAt) {
+        existingProduct.expiresAt = expiresAt
+      }
+    } else {
+      user.ingredients.push({
+        productId: product._id as any, // Ensure it's a valid ObjectId
+        expiresAt: expiresAt || null,
+      })
     }
+
+    await user.save()
     return product
   } catch (error) {
     console.error("Error handling product:", error)
@@ -64,7 +82,7 @@ export async function getUserProducts(userId: string) {
   await connectDB()
 
   const user = await User.findOne({ clerkUserId: userId }).populate({
-    path: "ingredients",
+    path: "ingredients.productId",
     select: "barcode name imageUrl description",
   })
   if (!user) {
@@ -72,9 +90,10 @@ export async function getUserProducts(userId: string) {
   }
 
   return user.ingredients.map((ingredient: any) => ({
-    barcode: ingredient.barcode || "N/A",
-    name: ingredient.name || "Unknown Product",
-    imageUrl: ingredient.imageUrl || "",
-    description: ingredient.description || "No description available",
+    barcode: ingredient.productId.barcode || "N/A",
+    name: ingredient.productId.name || "Unknown Product",
+    imageUrl: ingredient.productId.imageUrl || "",
+    expiresAt: ingredient.expiresAt || null,
+    description: ingredient.productId.description || "No description available",
   }))
 }

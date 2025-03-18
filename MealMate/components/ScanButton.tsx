@@ -1,18 +1,20 @@
 import React, { useState, useEffect } from "react"
 import { Text, Pressable, View, StyleSheet } from "react-native"
-import { CameraView, Camera, useCameraPermissions } from "expo-camera"
+import { CameraView, useCameraPermissions } from "expo-camera"
 import FontAwesome from "@expo/vector-icons/FontAwesome"
 import { cn } from "@/lib/utils"
-import { useUser } from "@clerk/clerk-expo"
+import ExpiryModal from "./ExpiryModal"
 
 export default function ScanButton({
   className = "",
   userId,
   refreshProducts,
+  setModalVisible,
 }: {
   className?: string
   userId: string
   refreshProducts: () => void
+  setModalVisible: (visible: boolean) => void
 }) {
   const [permission, requestPermission] = useCameraPermissions()
   const [scanning, setScanning] = useState(false)
@@ -67,7 +69,7 @@ export default function ScanButton({
               })
                 .then(response => response.json())
                 .then(result => {
-                  alert(`Product added: ${result.message}`)
+                  setModalVisible(true)
                   refreshProducts()
                 })
                 .catch(error => {

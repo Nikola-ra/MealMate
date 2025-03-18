@@ -4,6 +4,7 @@ import { Href, Slot, useRouter, useSegments } from "expo-router"
 import React, { useEffect } from "react"
 
 import "./globals.css"
+import "react-native-gesture-handler"
 
 export default function RootLayout() {
   const tokenCache = token

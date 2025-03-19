@@ -10,11 +10,13 @@ export default function ScanButton({
   userId,
   refreshProducts,
   setModalVisible,
+  setCurrentProductId,
 }: {
   className?: string
   userId: string
   refreshProducts: () => void
   setModalVisible: (visible: boolean) => void
+  setCurrentProductId: (value: string | null) => void
 }) {
   const [permission, requestPermission] = useCameraPermissions()
   const [scanning, setScanning] = useState(false)
@@ -57,6 +59,7 @@ export default function ScanButton({
             style={styles.camera}
             onBarcodeScanned={({ data }) => {
               setScanning(false)
+              setModalVisible(true)
               fetch(`http://${process.env.EXPO_PUBLIC_SOCKET}/products`, {
                 method: "POST",
                 headers: {
@@ -69,7 +72,8 @@ export default function ScanButton({
               })
                 .then(response => response.json())
                 .then(result => {
-                  setModalVisible(true)
+                  // console.log(result.product)
+                  setCurrentProductId(result.product._id) // Update the currentProductId state
                   refreshProducts()
                 })
                 .catch(error => {

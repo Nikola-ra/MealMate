@@ -78,6 +78,36 @@ export async function newProduct({
   }
 }
 
+export async function updateExpiryDate({
+  userId,
+  productId,
+  expiryDate,
+}: {
+  userId: string
+  productId: string
+  expiryDate: Date | null
+}) {
+  await connectDB()
+
+  const user = await User.findOne({ clerkUserId: userId })
+
+  if (!user) {
+    throw new Error("User not found")
+  }
+
+  const ingredient = user.ingredients.find(
+    item => item.productId.toString() === productId
+  )
+
+  if (!ingredient) {
+    throw new Error("Product not found in user's ingredients")
+  }
+
+  ingredient.expiresAt = expiryDate ? new Date(expiryDate) : null
+
+  await user.save()
+}
+
 export async function getUserProducts(userId: string) {
   await connectDB()
 

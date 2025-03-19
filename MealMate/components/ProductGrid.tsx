@@ -41,7 +41,7 @@ function ProductCard({
         source={{ uri: imageUrl }}
         resizeMode="cover"
       />
-      <View>
+      <View className="flex flex-col justify-between">
         <Text className="text-xl font-semibold text-gray-800 flex-1">
           {name}
         </Text>
@@ -49,10 +49,15 @@ function ProductCard({
         <Text className="text-sm font-normal text-gray-500">
           {expiresAt == null
             ? "Expires at : Not Specified"
-            : `Expires at : ${expiresAt}`}
+            : `Expires at : ${new Date(expiresAt).toLocaleDateString(
+                undefined,
+                {
+                  year: "numeric",
+                  month: "long",
+                  day: "numeric",
+                }
+              )}`}
         </Text>
-
-        <Text className="text-sm text-gray-500">{expiresAt}</Text>
       </View>
     </View>
   )

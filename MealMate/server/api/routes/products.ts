@@ -1,4 +1,8 @@
-import { getUserProducts, newProduct } from "@/server/db/products"
+import {
+  getUserProducts,
+  newProduct,
+  updateExpiryDate,
+} from "@/server/db/products"
 
 const express = require("express")
 
@@ -43,6 +47,30 @@ router.post("/", async (req: any, res: any) => {
   } catch (error) {
     console.error("Error in /api/users:", error)
     res.status(500).json({ error: "Internal server error" })
+  }
+})
+
+router.put("/:productId/edit", async (req: any, res: any) => {
+  try {
+    const { productId } = req.params
+    const { userId, expiryDate } = req.body
+
+    if (!productId || !userId || !expiryDate) {
+      return res
+        .status(400)
+        .json({ error: "productId, userId, and expiryDate are required" })
+    }
+
+    await updateExpiryDate({ userId, productId, expiryDate })
+
+    return res.status(200).json({
+      message: "Expiry date updated successfully",
+      productId,
+      expiryDate,
+    })
+  } catch (error) {
+    console.error("Error in updating expiry date:", error)
+    return res.status(500).json({ error: "Internal server error" })
   }
 })
 

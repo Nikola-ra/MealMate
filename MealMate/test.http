@@ -3,9 +3,18 @@ Content-Type: application/json
 
 {
     "barCode": "5449000000996",
-    "userId": "user_2u94I2vSjP1M6OcnBmkbrmVReCb"
+    "userId": "user_2uSC1DkP75fkiMZ7j2PUP14dDxk"
 }
 
 ###
 
 GET  http://localhost:3001/products/user_2u94I2vSjP1M6OcnBmkbrmVReCb
+
+###
+PUT http://localhost:3001/products/67dab81512ec38464f62abf3/edit
+Content-Type: application/json
+
+{
+    "userId": "user_2uSC1DkP75fkiMZ7j2PUP14dDxk",
+    "expiryDate": "2024-03-31T00:00:00.000Z"
+}

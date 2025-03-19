@@ -6,15 +6,17 @@ export default function ExpiryModal({
   isVisible,
   onClose,
   onSubmit,
+  productId,
 }: {
   isVisible: boolean
   onClose: () => void
-  onSubmit: (date: Date | null) => void
+  onSubmit: (productId: string, date: Date | null) => void
+  productId: string
 }) {
   const [selectedDate, setSelectedDate] = useState<Date | null>(null)
   const [isDatePickerVisible, setDatePickerVisible] = useState(false)
 
-  const handleConfirm = (date: Date) => {
+  function handleConfirm(date: Date) {
     setSelectedDate(date)
     setDatePickerVisible(false)
   }
@@ -54,7 +56,7 @@ export default function ExpiryModal({
             <TouchableOpacity
               className="flex-1 bg-gray-300 p-3 rounded-lg mr-2 items-center"
               onPress={() => {
-                onSubmit(null)
+                onSubmit(productId, null)
                 onClose()
               }}
             >
@@ -64,7 +66,7 @@ export default function ExpiryModal({
             <TouchableOpacity
               className="flex-1 bg-green-600 p-3 rounded-lg items-center"
               onPress={() => {
-                onSubmit(selectedDate)
+                onSubmit(productId, selectedDate)
                 onClose()
               }}
             >

@@ -12,6 +12,8 @@ export default function HomePage() {
   const [products, setProducts] = useState([])
   const [modalVisible, setModalVisible] = useState(false)
 
+  const [currentProductId, setCurrentProductId] = useState<string | null>(null)
+
   function fetchProducts() {
     if (!id) return
     fetch(`http://${process.env.EXPO_PUBLIC_SOCKET}/products/${id}`, {
@@ -38,16 +40,39 @@ export default function HomePage() {
     fetchProducts()
   }, [id])
 
-  function handleSubmit(expiryDate: Date | null) {
-    console.log("Selected Expiry Date:", expiryDate)
+  function handleSubmit(productId: string, expiryDate: Date | null) {
+    // if (!productId || !expiryDate) {
+    //   console.error("Product ID and expiry date are required.")
+    //   return
+    // }
 
-    //TODO
+    fetch(
+      `http://${process.env.EXPO_PUBLIC_SOCKET}/products/${productId}/edit`,
+      {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          userId: id,
+          expiryDate: expiryDate?.toISOString(),
+        }),
+      }
+    )
+      .then(response => {
+        if (!response.ok) {
+          throw new Error(`HTTP error! Status: ${response.status}`)
+        }
+        return response.json()
+      })
+      .then(data => {
+        console.log("Product updated successfully:", data)
+        fetchProducts() // Refresh the product list after update
+      })
+      .catch(error => {
+        console.error("Error updating product:", error)
+      })
 
-    // fetch(`http://${process.env.EXPO_PUBLIC_SOCKET}/products`, {
-    //   headers: {
-    //     method: "PUT",
-    //   },
-    // })
     setModalVisible(false)
   }
 
@@ -60,12 +85,14 @@ export default function HomePage() {
           setModalVisible(false)
         }}
         onSubmit={handleSubmit}
+        productId={currentProductId || ""}
       />
       <ScanButton
         className="absolute bottom-5 right-3"
         userId={id}
         refreshProducts={fetchProducts}
         setModalVisible={setModalVisible}
+        setCurrentProductId={setCurrentProductId}
       />
     </View>
   )

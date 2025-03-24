@@ -3,7 +3,7 @@ const express = require("express")
 const dotenv = require("dotenv")
 import clerkWebhookRouter from "./api/webhooks/clerk/route"
 import productRouter from "./api/routes/products"
-
+import recipesRouter from "./api/routes/recipes"
 dotenv.config()
 
 const app = express()
@@ -17,6 +17,7 @@ app.use(express.raw({ type: "application/json" }))
 // Routes
 app.use("/products", productRouter)
 app.use("/api/webhooks/clerk", clerkWebhookRouter)
+app.use("/recipes", recipesRouter)
 
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`)

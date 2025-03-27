@@ -2,7 +2,7 @@ POST http://localhost:3001/products
 Content-Type: application/json
 
 {
-    "barCode": "5449000000996",
+    "barCode": "8017759647914",
     "userId": "user_2uSC1DkP75fkiMZ7j2PUP14dDxk"
 }
 
@@ -18,3 +18,7 @@ Content-Type: application/json
     "userId": "user_2uSC1DkP75fkiMZ7j2PUP14dDxk",
     "expiryDate": "2024-03-31T00:00:00.000Z"
 }
+
+###
+
+GET http://localhost:3001/recipes/user_2uSC1DkP75fkiMZ7j2PUP14dDxk

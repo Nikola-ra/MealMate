@@ -2,6 +2,7 @@ const express = require("express")
 import { GoogleGenerativeAI } from "@google/generative-ai"
 import { User } from "@/schemas/User"
 import { connectDB } from "@/server/db/mongo"
+import { getUserProducts } from "@/server/db/products"
 
 const router = express.Router()
 
@@ -12,36 +13,55 @@ router.get("/:userId", async (req: any, res: any) => {
   const { userId } = req.params
 
   try {
-    await connectDB()
+    const userIngredients = await getUserProducts(userId)
 
-    // Fetch the user's ingredients
-    const user = await User.findOne({ clerkUserId: userId }).populate({
-      path: "ingredients.productId",
-      select: "name",
-    })
+    const ingredientNames = userIngredients.map(item => item.name)
 
-    if (!user) {
-      return res.status(404).json({ error: "User not found" })
+    if (!ingredientNames.length) {
+      return res.status(400).json({ error: "No ingredients available" })
     }
 
-    const ingredientNames = user.ingredients.map(
-      (ingredient: any) => ingredient.productId.name
-    )
+    const prompt = `Generate 7 food recipes using ONLY: [${ingredientNames.join(
+      ","
+    )}]. Allow only salt/oil/pepper/water as extras.
 
-    const prompt = `Generate 5 recipes based on the following ingredients: ${ingredientNames.join(
-      ", "
-    )}. Each recipe should include a title, description, image URL, and a web link.`
+Return STRICT JSON array with:
+- "title" (max 4 words)
+- "features" (2-3 tags ex: "vegetarian,protein")
+- "image_url" (real CC0 photo of the recipe)
+- "recipe_link" (existing URL to the recipe preferrably from giallo zafferano)
 
-    // Make a request to the Gemini API
-    const result = await model.generateContent(prompt)
+Valid JSON, double quotes only. Example:
+[{
+  "title": "Chickpea spinach pasta",
+  "features": "vegan,quick",
+  "image_url": "https://example.com/img.jpg",
+  "recipe_link": "https://recipesite.com/123"
+}]
+  
+do not invent ingredients and recipes, use only the ones provided, do not get too creative, stick to findable images and links to recipes, if there are none with those ingredients, provide less or none, you do not need to use all of the ingredients provided, keep it simple.`
 
-    // Parse the response (assuming the API returns JSON-like text)
-    const recipes = JSON.parse(result.response.text())
+    const result = await model.generateContent({
+      contents: [
+        {
+          role: "user",
+          parts: [{ text: prompt }],
+        },
+      ],
+    })
+
+    const rawText = result.response.text()
+    const cleanText = rawText.replace(/^```json|```$/g, "")
+    const recipes = JSON.parse(cleanText)
 
     return res.status(200).json({ recipes })
   } catch (error) {
-    console.error("Error fetching recipes:", error)
-    return res.status(500).json({ error: "Internal server error" })
+    console.error("Error:", error)
+    const message = error instanceof Error ? error.message : "Unknown error"
+    return res.status(500).json({
+      error: "Recipe generation failed",
+      details: message,
+    })
   }
 })
 

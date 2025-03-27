@@ -27,7 +27,13 @@ export default function HomeLayout() {
         <Tabs.Screen
           name="recipes"
           options={{
-            headerShown: false,
+            headerTitle: "Recipes",
+            headerTitleStyle: {
+              fontSize: 30,
+              marginLeft: 9,
+              fontWeight: "bold",
+            },
+            headerRight: () => <LogoutButton className="mr-5" />,
             tabBarActiveTintColor: "green", // Change active tab text color
             tabBarInactiveTintColor: "gray",
             tabBarIcon: ({ color }) => (

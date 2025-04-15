@@ -2,13 +2,13 @@ POST http://localhost:3001/products
 Content-Type: application/json
 
 {
-    "barCode": "8017759647914",
+    "barCode": "8000500169322",
     "userId": "user_2uSC1DkP75fkiMZ7j2PUP14dDxk"
 }
 
 ###
 
-GET  http://localhost:3001/products/user_2u94I2vSjP1M6OcnBmkbrmVReCb
+GET  http://localhost:3001/products/user_2uSC1DkP75fkiMZ7j2PUP14dDxk
 
 ###
 PUT http://localhost:3001/products/67dab81512ec38464f62abf3/edit
@@ -22,3 +22,13 @@ Content-Type: application/json
 ###
 
 GET http://localhost:3001/recipes/user_2uSC1DkP75fkiMZ7j2PUP14dDxk
+
+###
+
+POST http://localhost:3001/products/delete
+Content-Type: application/json
+
+{
+    "userId": "user_2uSC1DkP75fkiMZ7j2PUP14dDxk",
+    "barcode": "8000090007448"
+}

@@ -54,7 +54,7 @@ export default function LoginPage() {
 
       <CustomInput
         label="E-mail"
-        placeholder="example@gmail.com"
+        placeholder="youremail@gmail.com"
         value={emailAddress}
         onChangeText={setEmailAddress}
       />

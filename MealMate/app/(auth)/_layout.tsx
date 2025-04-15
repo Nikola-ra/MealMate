@@ -19,8 +19,12 @@ export default function HomeLayout() {
             headerRight: () => <LogoutButton className="mr-5" />,
             tabBarActiveTintColor: "green",
             tabBarInactiveTintColor: "gray",
-            tabBarIcon: ({ color }) => (
-              <FontAwesome size={28} name="home" color={"#22c55e"} />
+            tabBarIcon: ({ color, focused }) => (
+              <FontAwesome
+                size={28}
+                name="home"
+                color={focused ? "#22c55e" : "gray"}
+              />
             ),
           }}
         />
@@ -34,10 +38,14 @@ export default function HomeLayout() {
               fontWeight: "bold",
             },
             headerRight: () => <LogoutButton className="mr-5" />,
-            tabBarActiveTintColor: "green", // Change active tab text color
+            tabBarActiveTintColor: "green",
             tabBarInactiveTintColor: "gray",
-            tabBarIcon: ({ color }) => (
-              <FontAwesome size={28} name="cutlery" color={"#22c55e"} />
+            tabBarIcon: ({ color, focused }) => (
+              <FontAwesome
+                size={28}
+                name="cutlery"
+                color={focused ? "#22c55e" : "gray"}
+              />
             ),
           }}
         />

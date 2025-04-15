@@ -1,4 +1,5 @@
 import {
+  deleteProductFromUser,
   getUserProducts,
   newProduct,
   updateExpiryDate,
@@ -7,6 +8,8 @@ import {
 const express = require("express")
 
 const router = express.Router()
+router.use(express.json())
+router.use(express.urlencoded({ extended: true }))
 
 router.get("/:id", async (req: any, res: any) => {
   try {
@@ -50,6 +53,7 @@ router.post("/", async (req: any, res: any) => {
   }
 })
 
+//AGGIORNAMENTO DELLA DATA DI SCADENZA DEL PRODOTTO
 router.put("/:productId/edit", async (req: any, res: any) => {
   try {
     const { productId } = req.params
@@ -74,4 +78,23 @@ router.put("/:productId/edit", async (req: any, res: any) => {
   }
 })
 
+router.post("/delete", async (req: any, res: any) => {
+  const barcode = req.body.barcode
+  console.log("body: ", req.body)
+  const userId = req.body.userId
+  console.log("sono ne delete", barcode, userId)
+  try {
+    if (!barcode || !userId) {
+      return res.status(400).json({ error: "barcode and userId are required" })
+    }
+
+    console.log("sono ne delete")
+
+    await deleteProductFromUser({ userId, barcode })
+
+    res.status(200).json({ message: "Product deleted successfully" })
+  } catch (error) {
+    res.status(500).json({ message: "error deleting products (DB)" })
+  }
+})
 export default router

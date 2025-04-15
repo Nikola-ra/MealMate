@@ -123,7 +123,38 @@ export async function getUserProducts(userId: string) {
     barcode: ingredient.productId.barcode || "N/A",
     name: ingredient.productId.name || "Unknown Product",
     imageUrl: ingredient.productId.imageUrl || "",
+    description: ingredient.productId.description || "No description",
     expiresAt: ingredient.expiresAt || null,
-    description: ingredient.productId.description || "No description available",
   }))
+}
+
+export async function deleteProductFromUser({
+  userId,
+  barcode,
+}: {
+  userId: string
+  barcode: string
+}) {
+  await connectDB()
+
+  const user = await User.findOne({ clerkUserId: userId }).populate({
+    path: "ingredients.productId",
+    select: "barcode",
+  })
+
+  if (!user) {
+    throw new Error("User not found")
+  }
+
+  try {
+    user.ingredients = user.ingredients.filter(
+      (ingredient: any) => ingredient.productId.barcode !== barcode
+    )
+
+    // Save the updated user document
+    await user.save()
+  } catch (error) {
+    console.error("Error deleting product:", error)
+    throw new Error("Error deleting product")
+  }
 }

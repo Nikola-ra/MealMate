@@ -32,3 +32,7 @@ Content-Type: application/json
     "userId": "user_2uSC1DkP75fkiMZ7j2PUP14dDxk",
     "barcode": "8000090007448"
 }
+
+###
+
+GET https://api.spoonacular.com/recipes/findByIngredients?ingredients=tea,+chocolatecookies,+crackers,+pasta&number=3&apiKey=c587a44252c74036acb1e796576e0e72

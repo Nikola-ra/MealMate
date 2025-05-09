@@ -8,6 +8,7 @@ import {
   Linking,
 } from "react-native"
 import { FontAwesome } from "@expo/vector-icons"
+import { useUser } from "@clerk/clerk-expo"
 
 type Recipe = {
   id: number
@@ -20,19 +21,54 @@ type Recipe = {
 }
 
 export default function Recipes() {
+  const { user } = useUser()
+  if (user == null) return null
+  const id = user.id
+
   const [recipes, setRecipes] = useState<Recipe[]>([])
   const [favorites, setFavorites] = useState<number[]>([])
 
+  const [ingredients, setIngredients] = useState([])
+
   const API_KEY = process.env.EXPO_PUBLIC_SPOONACULAR_API_KEY // replace with your Spoonacular API key
-  const ingredients = ["chicken", "tomato", "cheese"]
+
+  function fetchProducts() {
+    if (!id) return
+    fetch(`http://${process.env.EXPO_PUBLIC_SOCKET}/products/${id}`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+      .then(response => {
+        if (!response.ok) {
+          throw new Error(`HTTP error! Status: ${response.status}`)
+        }
+        return response.json()
+      })
+      .then(data => {
+        setIngredients(
+          data.products.map((product: any) => {
+            return product.name
+          })
+        )
+      })
+      .catch(error => {
+        console.error("Error fetching data:", error)
+      })
+  }
+
+  useEffect(() => {
+    fetchProducts()
+  }, [id])
 
   useEffect(() => {
     const fetchRecipes = async () => {
       try {
         const res = await fetch(
-          `https://api.spoonacular.com/recipes/findByIngredients?ingredients=${ingredients.join(
-            ","
-          )}&number=10&ranking=1&apiKey=${API_KEY}`
+          `https://api.spoonacular.com/recipes/findByIngredients?ingredients=${encodeURIComponent(
+            ingredients.join(",")
+          )}&number=10&ranking=2&apiKey=${API_KEY}`
         )
         const data = await res.json()
 
@@ -66,7 +102,7 @@ export default function Recipes() {
     }
 
     fetchRecipes()
-  }, [])
+  }, [id])
 
   const toggleFavorite = (id: number) => {
     setFavorites(prev =>

@@ -2,7 +2,6 @@ import { Button, Image, Pressable, Text, TextInput, View } from "react-native"
 import React, { useEffect, useRef, useState } from "react"
 import { useSignUp } from "@clerk/clerk-expo"
 import { Stack } from "expo-router"
-import Spinner from "react-native-loading-spinner-overlay"
 import CustomInput from "@/components/CustomInput"
 
 export default function signUpPage() {
@@ -79,7 +78,6 @@ export default function signUpPage() {
   return (
     <View className="flex flex-col items-center gap-4 h-screen justify-center p-4 bg-white">
       <Stack.Screen options={{ headerBackVisible: !pendingVerification }} />
-      <Spinner visible={loading} />
 
       {!pendingVerification && (
         <>

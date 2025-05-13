@@ -1,6 +1,5 @@
 import { Image, Pressable, Text, TextInput, View } from "react-native"
 import React, { useState, useEffect, useRef } from "react"
-import Spinner from "react-native-loading-spinner-overlay"
 import { useSignIn } from "@clerk/clerk-expo"
 import { Link } from "expo-router"
 import CustomInput from "@/components/CustomInput"
@@ -45,8 +44,6 @@ export default function LoginPage() {
 
   return (
     <View className="flex flex-col items-center gap-4 h-screen justify-center p-4 bg-white">
-      <Spinner visible={loading} />
-
       <Image
         source={require("@/assets/images/Bianco.png")}
         className="w-full h-32 mb-16"

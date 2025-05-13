@@ -37,7 +37,6 @@ export async function newProduct({
     }
 
     let product = await Product.findOne({ barcode: barCode })
-
     if (product) {
       product.count += 1
       await product.save()

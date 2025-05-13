@@ -3,7 +3,6 @@ import { Text, Pressable, View, StyleSheet } from "react-native"
 import { CameraView, useCameraPermissions } from "expo-camera"
 import FontAwesome from "@expo/vector-icons/FontAwesome"
 import { cn } from "@/lib/utils"
-import ExpiryModal from "./ExpiryModal"
 
 export default function ScanButton({
   className = "",
@@ -58,6 +57,7 @@ export default function ScanButton({
           <CameraView
             style={styles.camera}
             onBarcodeScanned={({ data }) => {
+              // console.log(data)
               setScanning(false)
               setModalVisible(true)
               fetch(`http://${process.env.EXPO_PUBLIC_SOCKET}/products`, {

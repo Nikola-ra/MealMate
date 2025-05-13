@@ -2,7 +2,7 @@ POST http://localhost:3001/products
 Content-Type: application/json
 
 {
-    "barCode": "8000500169322",
+    "barCode": "8024370017446",
     "userId": "user_2uSC1DkP75fkiMZ7j2PUP14dDxk"
 }
 

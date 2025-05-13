@@ -11,6 +11,7 @@ const router = express.Router()
 router.use(express.json())
 router.use(express.urlencoded({ extended: true }))
 
+//GET ALL PRODUCTS OF A USER
 router.get("/:id", async (req: any, res: any) => {
   try {
     const { id } = req.params
@@ -34,12 +35,16 @@ router.post("/", async (req: any, res: any) => {
   try {
     const { barCode, userId } = req.body
 
+    console.log("body: ", req.body)
+    console.log("barCode: ", barCode)
+    console.log("userId: ", userId)
     if (!barCode || !userId) {
       return res.status(400).json({ error: "barCode and userId are required" })
     }
 
     const product = await newProduct({ userId, barCode })
 
+    console.log("product: ", product)
     if (!product || product == null) {
       return res
         .status(404)
@@ -48,7 +53,7 @@ router.post("/", async (req: any, res: any) => {
       res.status(201).json({ message: "Product added successfully", product })
     }
   } catch (error) {
-    console.error("Error in /api/users:", error)
+    console.error("Error in /api/products:", error)
     res.status(500).json({ error: "Internal server error" })
   }
 })
@@ -78,11 +83,11 @@ router.put("/:productId/edit", async (req: any, res: any) => {
   }
 })
 
+//DELETE
 router.post("/delete", async (req: any, res: any) => {
   const barcode = req.body.barcode
   console.log("body: ", req.body)
   const userId = req.body.userId
-  console.log("sono ne delete", barcode, userId)
   try {
     if (!barcode || !userId) {
       return res.status(400).json({ error: "barcode and userId are required" })

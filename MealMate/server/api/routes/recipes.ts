@@ -1,13 +1,13 @@
 const express = require("express")
 import { GoogleGenerativeAI } from "@google/generative-ai"
-import { User } from "@/schemas/User"
-import { connectDB } from "@/server/db/mongo"
 import { getUserProducts } from "@/server/db/products"
 
 const router = express.Router()
 
 const genAI = new GoogleGenerativeAI(process.env.EXPO_PUBLIC_GEMINI_API_KEY!)
-const model = genAI.getGenerativeModel({ model: "gemini-2.0-flash" })
+const model = genAI.getGenerativeModel({
+  model: "gemini-2.0-flash",
+})
 
 router.get("/:userId", async (req: any, res: any) => {
   const { userId } = req.params
@@ -21,27 +21,12 @@ router.get("/:userId", async (req: any, res: any) => {
       return res.status(400).json({ error: "No ingredients available" })
     }
 
-    const prompt = `Generate 7 food recipes using ONLY: [${ingredientNames.join(
+    const prompt = `given the ingredients in THIS ARRAY: [${ingredientNames.join(
       ","
-    )}]. Allow only salt/oil/pepper/water as extras.
-
-Return STRICT JSON array with:
-- "title" (max 4 words)
-- "features" (2-3 tags ex: "vegetarian,protein")
-- "image_url" (real CC0 photo of the recipe)
-- "recipe_link" (existing URL to the recipe preferrably from giallo zafferano)
-
-Valid JSON, double quotes only. Example:
-[{
-  "title": "Chickpea spinach pasta",
-  "features": "vegan,quick",
-  "image_url": "https://example.com/img.jpg",
-  "recipe_link": "https://recipesite.com/123"
-}]
-  
-do not invent ingredients and recipes, use only the ones provided, do not get too creative, stick to findable images and links to recipes, if there are none with those ingredients, provide less or none, you do not need to use all of the ingredients provided, keep it simple.`
+    )}] i want you to generate the same array but the ingredients should be translated in english and optimized for querying recipes from SpoonacularAPI, your response should only be the JSON array`
 
     const result = await model.generateContent({
+      generationConfig: { responseMimeType: "application/json" },
       contents: [
         {
           role: "user",

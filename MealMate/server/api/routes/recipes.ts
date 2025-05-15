@@ -18,7 +18,7 @@ router.get("/:userId", async (req: any, res: any) => {
     const ingredientNames = userIngredients.map(item => item.name)
 
     if (!ingredientNames.length) {
-      return res.status(400).json({ error: "No ingredients available" })
+      return res.status(204).json({ message: "zero" })
     }
 
     const prompt = `given the ingredients in THIS ARRAY: [${ingredientNames.join(

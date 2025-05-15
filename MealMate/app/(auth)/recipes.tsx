@@ -30,11 +30,11 @@ export default function Recipes() {
 
   const [ingredients, setIngredients] = useState([])
 
-  const API_KEY = process.env.EXPO_PUBLIC_SPOONACULAR_API_KEY // replace with your Spoonacular API key
+  const API_KEY = process.env.EXPO_PUBLIC_SPOONACULAR_API_KEY
 
   function fetchProducts() {
     if (!id) return
-    fetch(`http://${process.env.EXPO_PUBLIC_SOCKET}/products/${id}`, {
+    fetch(`http://${process.env.EXPO_PUBLIC_SOCKET}/recipes/${id}`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -47,11 +47,8 @@ export default function Recipes() {
         return response.json()
       })
       .then(data => {
-        setIngredients(
-          data.products.map((product: any) => {
-            return product.name
-          })
-        )
+        console.log(data.recipes)
+        setIngredients(data.recipes)
       })
       .catch(error => {
         console.error("Error fetching data:", error)

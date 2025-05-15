@@ -1,5 +1,5 @@
 import { useUser } from "@clerk/clerk-expo"
-import { ScrollView, Text, View } from "react-native"
+import { ActivityIndicator, ScrollView, Text, View } from "react-native"
 import React, { useEffect, useState } from "react"
 import ScanButton from "@/components/ScanButton"
 import ProductGrid from "@/components/ProductGrid"
@@ -112,29 +112,37 @@ export default function HomePage() {
     }
   }
 
-  return (
-    <View className="relative flex flex-1 h-screen">
-      <ProductGrid products={products} onDelete={handleDelete} />
-      <ExpiryModal
-        isVisible={expiryModalVisible}
-        onClose={() => {
-          setExpiryModalVisible(false)
-        }}
-        onSubmit={handleSubmit}
-        productId={currentProductId || ""}
-      />
-      <DeleteProductModal
-        isVisible={deleteModalVisible}
-        onDelete={handleDeleteProduct}
-        onClose={() => setDeleteModalVisible(false)}
-      ></DeleteProductModal>
-      <ScanButton
-        className="absolute bottom-5 right-3"
-        userId={id}
-        refreshProducts={fetchProducts}
-        setModalVisible={setExpiryModalVisible}
-        setCurrentProductId={setCurrentProductId}
-      />
-    </View>
-  )
+  if (products.length == 0) {
+    return (
+      <View className="h-screen w-full flex justify-center items-center">
+        <ActivityIndicator color="00ff00" size="large" />
+      </View>
+    )
+  } else {
+    return (
+      <View className="relative flex flex-1 h-screen">
+        <ProductGrid products={products} onDelete={handleDelete} />
+        <ExpiryModal
+          isVisible={expiryModalVisible}
+          onClose={() => {
+            setExpiryModalVisible(false)
+          }}
+          onSubmit={handleSubmit}
+          productId={currentProductId || ""}
+        />
+        <DeleteProductModal
+          isVisible={deleteModalVisible}
+          onDelete={handleDeleteProduct}
+          onClose={() => setDeleteModalVisible(false)}
+        ></DeleteProductModal>
+        <ScanButton
+          className="absolute bottom-5 right-3"
+          userId={id}
+          refreshProducts={fetchProducts}
+          setModalVisible={setExpiryModalVisible}
+          setCurrentProductId={setCurrentProductId}
+        />
+      </View>
+    )
+  }
 }

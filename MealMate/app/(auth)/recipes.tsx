@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react"
+import React, { useEffect, useState, useCallback } from "react"
 import {
   View,
   Text,
@@ -7,6 +7,7 @@ import {
   TouchableOpacity,
   Linking,
   ActivityIndicator,
+  RefreshControl,
 } from "react-native"
 import { FontAwesome } from "@expo/vector-icons"
 import { useUser } from "@clerk/clerk-expo"
@@ -28,12 +29,12 @@ export default function Recipes() {
 
   const [recipes, setRecipes] = useState<Recipe[]>([])
   const [favorites, setFavorites] = useState<number[]>([])
-
   const [ingredients, setIngredients] = useState([])
+  const [refreshing, setRefreshing] = useState(false)
 
   const API_KEY = process.env.EXPO_PUBLIC_SPOONACULAR_API_KEY
 
-  function fetchProducts() {
+  const fetchProducts = useCallback(() => {
     if (!id) return
     fetch(`http://${process.env.EXPO_PUBLIC_SOCKET}/recipes/${id}`, {
       method: "GET",
@@ -48,60 +49,65 @@ export default function Recipes() {
         return response.json()
       })
       .then(data => {
-        console.log(data.recipes)
         setIngredients(data.recipes)
       })
       .catch(error => {
         console.error("Error fetching data:", error)
       })
-  }
-
-  useEffect(() => {
-    fetchProducts()
   }, [id])
 
   useEffect(() => {
-    const fetchRecipes = async () => {
-      try {
-        const res = await fetch(
-          `https://api.spoonacular.com/recipes/findByIngredients?ingredients=${encodeURIComponent(
-            ingredients.join(",")
-          )}&number=10&ranking=2&apiKey=${API_KEY}`
+    fetchProducts()
+  }, [fetchProducts])
+
+  const fetchRecipes = useCallback(async () => {
+    try {
+      const res = await fetch(
+        `https://api.spoonacular.com/recipes/findByIngredients?ingredients=${encodeURIComponent(
+          ingredients.join(",")
+        )}&number=10&ranking=2&apiKey=${API_KEY}`
+      )
+      const data = await res.json()
+
+      const detailPromises = data.map((recipe: any) =>
+        fetch(
+          `https://api.spoonacular.com/recipes/${recipe.id}/information?includeNutrition=true&apiKey=${API_KEY}`
+        ).then(res => res.json())
+      )
+
+      const details = await Promise.all(detailPromises)
+
+      const formatted: Recipe[] = details.map((r: any) => {
+        const calorieInfo = r.nutrition?.nutrients?.find(
+          (n: any) => n.title === "Calories"
         )
-        const data = await res.json()
+        return {
+          id: r.id,
+          title: r.title,
+          image: r.image,
+          url: r.sourceUrl,
+          source: new URL(r.sourceUrl).hostname.replace("www.", ""),
+          diets: r.diets,
+          calories: calorieInfo ? Math.round(calorieInfo.amount) : "N/A",
+        }
+      })
 
-        const detailPromises = data.map((recipe: any) =>
-          fetch(
-            `https://api.spoonacular.com/recipes/${recipe.id}/information?includeNutrition=true&apiKey=${API_KEY}`
-          ).then(res => res.json())
-        )
-
-        const details = await Promise.all(detailPromises)
-
-        const formatted: Recipe[] = details.map((r: any) => {
-          const calorieInfo = r.nutrition?.nutrients?.find(
-            (n: any) => n.title === "Calories"
-          )
-          return {
-            id: r.id,
-            title: r.title,
-            image: r.image,
-            url: r.sourceUrl,
-            source: new URL(r.sourceUrl).hostname.replace("www.", ""),
-            diets: r.diets,
-            calories: calorieInfo ? Math.round(calorieInfo.amount) : "N/A",
-          }
-        })
-
-        setRecipes(formatted)
-      } catch (err) {
-        console.error("Error fetching recipes:", err)
-      }
+      setRecipes(formatted)
+    } catch (err) {
+      console.error("Error fetching recipes:", err)
     }
+  }, [ingredients, API_KEY])
 
+  useEffect(() => {
     if (ingredients.length !== 0) fetchRecipes()
-    else return
-  }, [ingredients])
+  }, [ingredients, fetchRecipes])
+
+  const onRefresh = useCallback(async () => {
+    setRefreshing(true)
+    await fetchProducts()
+    // fetchProducts will update ingredients, which triggers fetchRecipes via useEffect
+    setRefreshing(false)
+  }, [fetchProducts])
 
   const toggleFavorite = (id: number) => {
     setFavorites(prev =>
@@ -111,11 +117,9 @@ export default function Recipes() {
 
   if (recipes.length == 0) {
     return (
-      <>
-        <View className="h-screen w-full items-center justify-center">
-          <ActivityIndicator size="large" color="00ff00" />
-        </View>
-      </>
+      <View className="h-screen w-full items-center justify-center">
+        <ActivityIndicator size="large" color="00ff00" />
+      </View>
     )
   } else {
     return (
@@ -124,6 +128,9 @@ export default function Recipes() {
           data={recipes}
           keyExtractor={item => item.id.toString()}
           contentContainerStyle={{ paddingBottom: 100 }}
+          refreshControl={
+            <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+          }
           renderItem={({ item }) => (
             <TouchableOpacity
               onPress={() => Linking.openURL(item.url)}

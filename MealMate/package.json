@@ -45,6 +45,8 @@
     "expo-system-ui": "~5.0.7",
     "expo-web-browser": "~14.1.6",
     "express": "^4.21.2",
+    "lottie-ios": "^4.5.1",
+    "lottie-react-native": "7.2.2",
     "mongoose": "^8.10.2",
     "nativewind": "^4.1.23",
     "react": "19.0.0",

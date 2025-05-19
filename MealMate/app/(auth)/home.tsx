@@ -1,10 +1,19 @@
 import { useUser } from "@clerk/clerk-expo"
-import { ActivityIndicator, ScrollView, Text, View } from "react-native"
-import React, { useEffect, useState } from "react"
+import {
+  ActivityIndicator,
+  Dimensions,
+  ScrollView,
+  StyleSheet,
+  Text,
+  View,
+} from "react-native"
+import React, { useEffect, useRef, useState } from "react"
 import ScanButton from "@/components/ScanButton"
 import ProductGrid from "@/components/ProductGrid"
 import ExpiryModal from "@/components/ExpiryModal"
 import DeleteProductModal from "@/components/DeleteProductModal"
+import LottieView from "lottie-react-native"
+import ErrorModal from "@/components/ErrorModal"
 
 export default function HomePage() {
   const { user } = useUser()
@@ -16,6 +25,14 @@ export default function HomePage() {
 
   const [deleteModalVisible, setDeleteModalVisible] = useState(false)
   const [currentBarcode, setCurrentBarcode] = useState<string | null>(null)
+
+  const [errorModalVisible, setErrorModalVisible] = useState(true)
+
+  const animation = useRef<LottieView>(null)
+  //animation
+  useEffect(() => {
+    animation.current?.play()
+  }, [])
 
   function handleDelete(barcode: string) {
     setCurrentBarcode(barcode)
@@ -114,8 +131,14 @@ export default function HomePage() {
 
   if (products.length == 0) {
     return (
-      <View className="h-screen w-full flex justify-center items-center">
-        <ActivityIndicator color="00ff00" size="large" />
+      <View className="w-full flex-1 flex items-center justify-center">
+        <LottieView
+          ref={animation}
+          source={require("@/assets/animations/error.json")}
+          autoPlay
+          loop
+          style={styles.lottie}
+        />
       </View>
     )
   } else {
@@ -130,6 +153,10 @@ export default function HomePage() {
           onSubmit={handleSubmit}
           productId={currentProductId || ""}
         />
+        <ErrorModal
+          isVisible={errorModalVisible}
+          onClose={() => setErrorModalVisible(false)}
+        ></ErrorModal>
         <DeleteProductModal
           isVisible={deleteModalVisible}
           onDelete={handleDeleteProduct}
@@ -146,3 +173,16 @@ export default function HomePage() {
     )
   }
 }
+
+const { width } = Dimensions.get("window")
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  lottie: {
+    width: width * 0.6,
+    height: width * 0.6,
+  },
+})

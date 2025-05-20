@@ -61,7 +61,6 @@ export default function ScanButton({
             onBarcodeScanned={({ data }) => {
               // console.log(data)
               setScanning(false)
-              setModalVisible(true)
               fetch(`http://${process.env.EXPO_PUBLIC_SOCKET}/products`, {
                 method: "POST",
                 headers: {
@@ -76,6 +75,7 @@ export default function ScanButton({
                 .then(result => {
                   // console.log(result.product)
                   setCurrentProductId(result.product._id) // Update the currentProductId state
+                  setModalVisible(true)
                   refreshProducts()
                 })
                 .catch(error => {

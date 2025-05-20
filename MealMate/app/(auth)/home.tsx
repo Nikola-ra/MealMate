@@ -178,6 +178,7 @@ export default function HomePage() {
         <ErrorModal
           isVisible={errorModalVisible}
           onClose={() => setErrorModalVisible(false)}
+          additionalText="Maybe scan again or check if it is food that you're scanning!"
         ></ErrorModal>
         <DeleteProductModal
           isVisible={deleteModalVisible}

@@ -12,9 +12,11 @@ import LottieView from "lottie-react-native"
 export default function ErrorModal({
   isVisible,
   onClose,
+  additionalText,
 }: {
   isVisible: boolean
   onClose: () => void
+  additionalText?: string
 }) {
   const animation = useRef<LottieView>(null)
   //animation
@@ -31,9 +33,10 @@ export default function ErrorModal({
     >
       <View className="flex-1 justify-center items-center bg-black/50">
         <View className="bg-white p-6 rounded-2xl w-4/5 h-1/2">
-          <Text className="text-xl font-semibold text-gray-900 mb-4 text-center">
+          <Text className="text-2xl font-semibold text-gray-900 mb-4 text-center">
             Oops... Something Went Wrong!{" "}
           </Text>
+          <Text className="text-center opacity-50">{additionalText}</Text>
           <View className="w-full flex-1 flex items-center justify-center">
             <LottieView
               ref={animation}

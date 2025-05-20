@@ -49,6 +49,27 @@ export default function HomeLayout() {
             ),
           }}
         />
+        {/* <Tabs.Screen
+          name="settings"
+          options={{
+            headerTitle: "Settings",
+            headerTitleStyle: {
+              fontSize: 30,
+              marginLeft: 9,
+              fontWeight: "bold",
+            },
+            headerRight: () => <LogoutButton className="mr-5" />,
+            tabBarActiveTintColor: "green",
+            tabBarInactiveTintColor: "gray",
+            tabBarIcon: ({ color, focused }: { color: any; focused: any }) => (
+              <FontAwesome
+                size={28}
+                name="gear"
+                color={focused ? "#22c55e" : "gray"}
+              />
+            ),
+          }}
+        /> */}
       </Tabs>
     </>
   )

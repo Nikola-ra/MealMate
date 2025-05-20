@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useCallback } from "react"
+import React, { useEffect, useState, useCallback, useRef } from "react"
 import {
   View,
   Text,
@@ -8,9 +8,14 @@ import {
   Linking,
   ActivityIndicator,
   RefreshControl,
+  Dimensions,
+  StyleSheet,
 } from "react-native"
 import { FontAwesome } from "@expo/vector-icons"
 import { useUser } from "@clerk/clerk-expo"
+import LottieView from "lottie-react-native"
+import ScanButton from "@/components/ScanButton"
+import ErrorModal from "@/components/ErrorModal"
 
 type Recipe = {
   id: number
@@ -31,6 +36,9 @@ export default function Recipes() {
   const [favorites, setFavorites] = useState<number[]>([])
   const [ingredients, setIngredients] = useState([])
   const [refreshing, setRefreshing] = useState(false)
+  const [errorModalVisible, setErrorModalVisible] = useState(false)
+
+  const [loading, setLoading] = useState(true)
 
   const API_KEY = process.env.EXPO_PUBLIC_SPOONACULAR_API_KEY
 
@@ -56,6 +64,12 @@ export default function Recipes() {
       })
   }, [id])
 
+  const animation = useRef<LottieView>(null)
+  //animation
+  useEffect(() => {
+    animation.current?.play()
+  }, [])
+
   useEffect(() => {
     fetchProducts()
   }, [fetchProducts])
@@ -67,6 +81,7 @@ export default function Recipes() {
     }
 
     try {
+      setLoading(true)
       // 1️⃣ Find matching recipes by ingredients
       const findRes = await fetch(
         `https://api.spoonacular.com/recipes/findByIngredients?` +
@@ -81,11 +96,12 @@ export default function Recipes() {
 
       // 3️⃣ Fetch detailed info in bulk
       const infoRes = await fetch(
-        `https://api.spoonacular.com/recipes/informationBulk?apiKey=${API_KEY}`,
+        `https://api.spoonacular.com/recipes/informationBulk?ids=${ids.join(
+          ","
+        )}&apiKey=${API_KEY}`,
         {
-          method: "POST",
+          method: "GET",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ ids, includeNutrition: true }),
         }
       )
       if (!infoRes.ok) throw new Error(`Bulk info error: ${infoRes.status}`)
@@ -109,7 +125,9 @@ export default function Recipes() {
 
       // 5️⃣ Update state
       setRecipes(formatted)
+      setLoading(false)
     } catch (err) {
+      setErrorModalVisible(true)
       console.error("Error fetching recipes:", err)
     }
   }, [ingredients, API_KEY])
@@ -131,15 +149,47 @@ export default function Recipes() {
     )
   }
 
-  if (recipes.length == 0) {
+  if (loading) {
     return (
-      <View className="h-screen w-full items-center justify-center">
-        <ActivityIndicator size="large" color="00ff00" />
+      <View className="flex-1 w-full justify-center items-center gap-5">
+        <ErrorModal
+          isVisible={errorModalVisible}
+          onClose={() => setErrorModalVisible(false)}
+          additionalText="This error is temporary and we are working on it!"
+        ></ErrorModal>
+        <Text className="text-2xl font-semibold">Fetching your recipes...</Text>
+        <ActivityIndicator size="large" color="#008000" />
       </View>
     )
   } else {
+    if (recipes.length == 0) {
+      return (
+        <View className="w-full flex-1 flex items-center justify-center">
+          <ErrorModal
+            isVisible={errorModalVisible}
+            onClose={() => setErrorModalVisible(false)}
+            additionalText="This error is temporary and we are working on it!"
+          ></ErrorModal>
+          <Text className="text-2xl font-semibold">
+            No Products for your recipes yet!
+          </Text>
+          <LottieView
+            ref={animation}
+            source={require("@/assets/animations/noProducts.json")}
+            autoPlay
+            loop
+            style={styles.lottie}
+          />
+        </View>
+      )
+    }
     return (
       <View className="flex-1 bg-white">
+        <ErrorModal
+          isVisible={errorModalVisible}
+          onClose={() => setErrorModalVisible(false)}
+          additionalText="This error is temporary and we are working on it!"
+        ></ErrorModal>
         <FlatList
           data={recipes}
           keyExtractor={item => item.id.toString()}
@@ -184,3 +234,16 @@ export default function Recipes() {
     )
   }
 }
+
+const { width } = Dimensions.get("window")
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  lottie: {
+    width: width * 0.6,
+    height: width * 0.6,
+  },
+})

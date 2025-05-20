@@ -45,7 +45,7 @@ export default function ErrorModal({
           </View>
           <View className="flex-row justify-between mt-6">
             <TouchableOpacity
-              className="flex-1 bg-gray-300 p-3 rounded-lg mr-2 items-center"
+              className="w-1/2 bg-gray-300 p-3 rounded-lg mx-auto items-center"
               onPress={() => {
                 onClose()
               }}
@@ -67,7 +67,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   lottie: {
-    width: width * 0.6,
-    height: width * 0.6,
+    width: width * 0.8,
+    height: width * 0.8,
   },
 })

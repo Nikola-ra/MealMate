@@ -10,12 +10,14 @@ export default function ScanButton({
   refreshProducts,
   setModalVisible,
   setCurrentProductId,
+  setErrorModalVisible,
 }: {
   className?: string
   userId: string
   refreshProducts: () => void
   setModalVisible: (visible: boolean) => void
   setCurrentProductId: (value: string | null) => void
+  setErrorModalVisible: (visible: boolean) => void
 }) {
   const [permission, requestPermission] = useCameraPermissions()
   const [scanning, setScanning] = useState(false)
@@ -78,7 +80,7 @@ export default function ScanButton({
                 })
                 .catch(error => {
                   console.error("Error:", error)
-                  alert("Failed to add product.")
+                  setErrorModalVisible(true)
                 })
             }}
           />

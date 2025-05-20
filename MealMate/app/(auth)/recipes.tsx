@@ -61,25 +61,40 @@ export default function Recipes() {
   }, [fetchProducts])
 
   const fetchRecipes = useCallback(async () => {
+    if (ingredients.length === 0) {
+      setRecipes([])
+      return
+    }
+
     try {
-      const res = await fetch(
-        `https://api.spoonacular.com/recipes/findByIngredients?ingredients=${encodeURIComponent(
-          ingredients.join(",")
-        )}&number=10&ranking=2&apiKey=${API_KEY}`
+      // 1️⃣ Find matching recipes by ingredients
+      const findRes = await fetch(
+        `https://api.spoonacular.com/recipes/findByIngredients?` +
+          `ingredients=${encodeURIComponent(ingredients.join(","))}` +
+          `&number=10&ranking=2&apiKey=${API_KEY}`
       )
-      const data = await res.json()
+      if (!findRes.ok) throw new Error(`Find error: ${findRes.status}`)
+      const found = await findRes.json()
 
-      const detailPromises = data.map((recipe: any) =>
-        fetch(
-          `https://api.spoonacular.com/recipes/${recipe.id}/information?includeNutrition=true&apiKey=${API_KEY}`
-        ).then(res => res.json())
+      // 2️⃣ Extract just the IDs
+      const ids = found.map((r: any) => r.id)
+
+      // 3️⃣ Fetch detailed info in bulk
+      const infoRes = await fetch(
+        `https://api.spoonacular.com/recipes/informationBulk?apiKey=${API_KEY}`,
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ ids, includeNutrition: true }),
+        }
       )
+      if (!infoRes.ok) throw new Error(`Bulk info error: ${infoRes.status}`)
+      const details = await infoRes.json()
 
-      const details = await Promise.all(detailPromises)
-
+      // 4️⃣ Map into your Recipe[] shape
       const formatted: Recipe[] = details.map((r: any) => {
         const calorieInfo = r.nutrition?.nutrients?.find(
-          (n: any) => n.title === "Calories"
+          (n: any) => n.name === "Calories"
         )
         return {
           id: r.id,
@@ -92,6 +107,7 @@ export default function Recipes() {
         }
       })
 
+      // 5️⃣ Update state
       setRecipes(formatted)
     } catch (err) {
       console.error("Error fetching recipes:", err)

@@ -19,6 +19,8 @@ export default function HomePage() {
   const { user } = useUser()
   if (user == null) return null
   const id = user.id
+
+  const [loading, setLoading] = useState(true)
   const [products, setProducts] = useState([])
   const [expiryModalVisible, setExpiryModalVisible] = useState(false)
   const [currentProductId, setCurrentProductId] = useState<string | null>(null)
@@ -26,7 +28,7 @@ export default function HomePage() {
   const [deleteModalVisible, setDeleteModalVisible] = useState(false)
   const [currentBarcode, setCurrentBarcode] = useState<string | null>(null)
 
-  const [errorModalVisible, setErrorModalVisible] = useState(true)
+  const [errorModalVisible, setErrorModalVisible] = useState(false)
 
   const animation = useRef<LottieView>(null)
   //animation
@@ -56,6 +58,7 @@ export default function HomePage() {
       })
       .then(data => {
         setProducts(data.products)
+        setLoading(false)
       })
       .catch(error => {
         console.error("Error fetching data:", error)
@@ -129,19 +132,38 @@ export default function HomePage() {
     }
   }
 
-  if (products.length == 0) {
+  if (loading) {
     return (
-      <View className="w-full flex-1 flex items-center justify-center">
-        <LottieView
-          ref={animation}
-          source={require("@/assets/animations/error.json")}
-          autoPlay
-          loop
-          style={styles.lottie}
-        />
+      <View className="flex-1 w-full justify-center items-center gap-5">
+        <Text className="text-2xl font-semibold">
+          Fetching your products...
+        </Text>
+        <ActivityIndicator size="large" color="#008000" />
       </View>
     )
   } else {
+    if (products.length == 0) {
+      return (
+        <View className="w-full flex-1 flex items-center justify-center">
+          <Text className="text-2xl font-semibold">Add your first product</Text>
+          <LottieView
+            ref={animation}
+            source={require("@/assets/animations/noProducts.json")}
+            autoPlay
+            loop
+            style={styles.lottie}
+          />
+          <ScanButton
+            className="absolute bottom-5 right-3"
+            userId={id}
+            refreshProducts={fetchProducts}
+            setModalVisible={setExpiryModalVisible}
+            setCurrentProductId={setCurrentProductId}
+            setErrorModalVisible={setErrorModalVisible}
+          />
+        </View>
+      )
+    }
     return (
       <View className="relative flex flex-1 h-screen">
         <ProductGrid products={products} onDelete={handleDelete} />
@@ -168,6 +190,7 @@ export default function HomePage() {
           refreshProducts={fetchProducts}
           setModalVisible={setExpiryModalVisible}
           setCurrentProductId={setCurrentProductId}
+          setErrorModalVisible={setErrorModalVisible}
         />
       </View>
     )

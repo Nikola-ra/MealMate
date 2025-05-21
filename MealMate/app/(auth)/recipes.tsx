@@ -44,7 +44,7 @@ export default function Recipes() {
 
   const fetchProducts = useCallback(() => {
     if (!id) return
-    fetch(`http://${process.env.EXPO_PUBLIC_SOCKET}/recipes/${id}`, {
+    fetch(`${process.env.EXPO_PUBLIC_NGROK}/recipes/${id}`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",

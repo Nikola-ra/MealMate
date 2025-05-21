@@ -25,10 +25,7 @@
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
-      "permissions": [
-        "android.permission.CAMERA",
-        "android.permission.CAMERA"
-      ],
+      "permissions": ["android.permission.CAMERA", "android.permission.CAMERA"],
       "package": "com.nikola_rahovic.MealMate"
     },
     "web": {
@@ -46,8 +43,7 @@
           "resizeMode": "contain",
           "backgroundColor": "#ffffff"
         }
-      ],
-      "expo-barcode-scanner"
+      ]
     ],
     "experiments": {
       "typedRoutes": true

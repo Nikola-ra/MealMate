@@ -11,6 +11,9 @@ Content-Type: application/json
 GET  http://localhost:3001/products/user_2uSC1DkP75fkiMZ7j2PUP14dDxk
 
 ###
+GET https://tidy-seagull-forcibly.ngrok-free.app/products/user_2uSC1DkP75fkiMZ7j2PUP14dDxk
+
+###
 PUT http://localhost:3001/products/67dab81512ec38464f62abf3/edit
 Content-Type: application/json
 

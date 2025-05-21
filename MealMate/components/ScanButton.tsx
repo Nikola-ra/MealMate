@@ -61,7 +61,7 @@ export default function ScanButton({
             onBarcodeScanned={({ data }) => {
               // console.log(data)
               setScanning(false)
-              fetch(`http://${process.env.EXPO_PUBLIC_SOCKET}/products`, {
+              fetch(`${process.env.EXPO_PUBLIC_NGROK}/products`, {
                 method: "POST",
                 headers: {
                   "Content-Type": "application/json",

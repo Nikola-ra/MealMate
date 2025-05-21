@@ -44,7 +44,7 @@ export default function HomePage() {
 
   function fetchProducts() {
     if (!id) return
-    fetch(`http://${process.env.EXPO_PUBLIC_SOCKET}/products/${id}`, {
+    fetch(`${process.env.EXPO_PUBLIC_NGROK}/products/${id}`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -70,19 +70,16 @@ export default function HomePage() {
   }, [id])
 
   function handleSubmit(productId: string, expiryDate: Date | null) {
-    fetch(
-      `http://${process.env.EXPO_PUBLIC_SOCKET}/products/${productId}/edit`,
-      {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          userId: id,
-          expiryDate: expiryDate?.toISOString(),
-        }),
-      }
-    )
+    fetch(`${process.env.EXPO_PUBLIC_NGROK}/products/${productId}/edit`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        userId: id,
+        expiryDate: expiryDate?.toISOString(),
+      }),
+    })
       .then(response => {
         if (!response.ok) {
           throw new Error(`HTTP error! Status: ${response.status}`)
@@ -102,7 +99,7 @@ export default function HomePage() {
 
   function handleDeleteProduct() {
     if (currentBarcode) {
-      fetch(`http://${process.env.EXPO_PUBLIC_SOCKET}/products/delete`, {
+      fetch(`${process.env.EXPO_PUBLIC_NGROK}/products/delete`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

@@ -19,6 +19,6 @@ app.use("/products", productRouter)
 app.use("/api/webhooks/clerk", clerkWebhookRouter)
 app.use("/recipes", recipesRouter)
 
-app.listen(PORT, () => {
+app.listen(PORT, "0.0.0.0", () => {
   console.log(`Server is running on port ${PORT}`)
 })

@@ -26,6 +26,7 @@
         "backgroundColor": "#ffffff"
       },
       "permissions": [
+        "android.permission.CAMERA",
         "android.permission.CAMERA"
       ],
       "package": "com.nikola_rahovic.MealMate"
@@ -56,6 +57,12 @@
         "projectId": "dd89cda8-f8a5-4051-a3fb-482c512fa1b3"
       }
     },
-    "owner": "nikola_rahovic"
+    "owner": "nikola_rahovic",
+    "runtimeVersion": {
+      "policy": "appVersion"
+    },
+    "updates": {
+      "url": "https://u.expo.dev/dd89cda8-f8a5-4051-a3fb-482c512fa1b3"
+    }
   }
 }

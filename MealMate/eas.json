@@ -10,6 +10,7 @@
       "channel": "development"
     },
     "preview": {
+      "android": { "buildType": "apk" },
       "environment": "preview",
       "distribution": "internal",
       "channel": "preview"

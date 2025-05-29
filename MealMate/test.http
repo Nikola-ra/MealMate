@@ -24,7 +24,7 @@ Content-Type: application/json
 
 ###
 
-GET http://localhost:3001/recipes/user_2uSC1DkP75fkiMZ7j2PUP14dDxk
+GET https://tidy-seagull-forcibly.ngrok-free.app/recipes/user_2uSC1DkP75fkiMZ7j2PUP14dDxk
 
 ###
 
